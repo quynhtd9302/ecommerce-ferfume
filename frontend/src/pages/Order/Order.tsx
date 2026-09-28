@@ -54,7 +54,9 @@ const Order: FC = (): ReactElement => {
             dispatch(resetOrderState());
             dispatch(resetCartState());
         };
-    }, []);
+    // Intentionally not re-run when usersData changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch, form]);
 
     const onFormSubmit = (order: OrderFormData): void => {
         const perfumesId = Object.fromEntries(new Map(JSON.parse(localStorage.getItem("perfumes") as string)));

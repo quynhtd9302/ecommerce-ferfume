@@ -4,6 +4,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 
 import ContentWrapper from "../../components/ContentWrapper/ContentWrapper";
 import ContentTitle from "../../components/ContentTitle/ContentTitle";
+import { SHOP_EMAIL, SHOP_PHONE } from "../../constants/shopInfo";
 
 const Contacts: FC = (): ReactElement => {
 
@@ -16,14 +17,18 @@ const Contacts: FC = (): ReactElement => {
             <ContentTitle icon={<InfoCircleOutlined />} title={"Contacts"} />
             <Row gutter={32}>
                 <Col span={12}>
-                    <div>
-                        <Typography.Text strong>{"Mobile: "}</Typography.Text>
-                        <Typography.Text>(066) 696-66-23</Typography.Text>
-                    </div>
-                    <div>
-                        <Typography.Text strong>{"E-mail: "}</Typography.Text>
-                        <Typography.Text>merikbest2015@gmail.com</Typography.Text>
-                    </div>
+                    {SHOP_PHONE && (
+                        <div>
+                            <Typography.Text strong>{"Mobile: "}</Typography.Text>
+                            <Typography.Text>{SHOP_PHONE}</Typography.Text>
+                        </div>
+                    )}
+                    {SHOP_EMAIL && (
+                        <div>
+                            <Typography.Text strong>{"E-mail: "}</Typography.Text>
+                            <Typography.Text>{SHOP_EMAIL}</Typography.Text>
+                        </div>
+                    )}
                     <div style={{ marginTop: 16 }}>
                         <Typography.Text strong>Working time</Typography.Text>
                     </div>

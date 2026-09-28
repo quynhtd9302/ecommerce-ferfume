@@ -27,7 +27,7 @@ const Registration: FC = (): ReactElement => {
         return () => {
             dispatch(resetAuthState());
         };
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         setCaptchaValue("");

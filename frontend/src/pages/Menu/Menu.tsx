@@ -40,7 +40,8 @@ const Menu: FC = (): ReactElement => {
     const { searchValue, searchTypeValue, resetFields, form, onSearch, handleChangeSelect } = useSearch();
 
     useEffect(() => {
-        const perfumeData = location.state.id;
+        // No state when the page is opened directly (typed URL, refresh): show all perfumes
+        const perfumeData = location.state?.id ?? "all";
 
         if (perfumeData === "female" || perfumeData === "male") {
             dispatch(
@@ -70,10 +71,14 @@ const Menu: FC = (): ReactElement => {
         return () => {
             dispatch(resetPerfumesState());
         };
-    }, []);
+    // Intentionally not re-run when filterParams, location.state, sortByPrice change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch]);
 
     useEffect(() => {
         resetPagination();
+    // Intentionally not re-run when resetPagination changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterParams, sortByPrice]);
 
     const onChangeCheckbox = (checkedValues: CheckboxValueType[], category: CheckboxCategoryFilter): void => {

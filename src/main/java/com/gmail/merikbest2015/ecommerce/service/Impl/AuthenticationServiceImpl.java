@@ -44,7 +44,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    @Value("${hostname}")
+    @Value("${app.frontend-host}")
     private String hostname;
 
     @Value("${recaptcha.secret}")

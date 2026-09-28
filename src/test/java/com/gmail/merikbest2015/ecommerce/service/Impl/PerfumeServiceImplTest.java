@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.ecommerce.service.Impl;
 
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
+import com.gmail.merikbest2015.ecommerce.exception.ApiRequestException;
 import com.gmail.merikbest2015.ecommerce.dto.perfume.PerfumeSearchRequest;
 import com.gmail.merikbest2015.ecommerce.repository.PerfumeRepository;
 import com.gmail.merikbest2015.ecommerce.repository.projection.PerfumeProjection;
@@ -15,11 +16,14 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +32,8 @@ import static com.gmail.merikbest2015.ecommerce.util.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -135,16 +141,39 @@ public class PerfumeServiceImplTest {
     }
 
     @Test
-    public void savePerfume() {
-        MultipartFile multipartFile = new MockMultipartFile(FILE_NAME, FILE_NAME, "multipart/form-data", FILE_PATH.getBytes());
+    public void savePerfume() throws Exception {
+        byte[] jpeg = Files.readAllBytes(Paths.get(FILE_PATH));
+        MultipartFile multipartFile = new MockMultipartFile(FILE_NAME, FILE_NAME, "multipart/form-data", jpeg);
         Perfume perfume = new Perfume();
         perfume.setId(1L);
         perfume.setPerfumer(PERFUMER_CHANEL);
 
         when(perfumeRepository.save(perfume)).thenReturn(perfume);
         Perfume saved = perfumeService.savePerfume(perfume, multipartFile);
-        assertTrue(saved.getFilename().contains("/img/"));
+        assertTrue(saved.getFilename().startsWith("/img/"));
         assertTrue(saved.getFilename().endsWith("Chanel_N5.jpg"));
         verify(perfumeRepository, times(1)).save(perfume);
+    }
+
+    @Test
+    public void savePerfume_ShouldRejectNonImageFile() {
+        MultipartFile multipartFile = new MockMultipartFile(FILE_NAME, "evil.jpg", "image/jpeg",
+                "<html><script>alert(1)</script></html>".getBytes());
+        Perfume perfume = new Perfume();
+
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> perfumeService.savePerfume(perfume, multipartFile));
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        verify(perfumeRepository, never()).save(perfume);
+    }
+
+    @Test
+    public void detectImageExtension() {
+        assertEquals("jpg", PerfumeServiceImpl.detectImageExtension(new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, 0}));
+        assertEquals("png", PerfumeServiceImpl.detectImageExtension(new byte[]{(byte) 0x89, 'P', 'N', 'G', 0x0D, 0x0A, 0x1A, 0x0A}));
+        assertEquals("gif", PerfumeServiceImpl.detectImageExtension("GIF89a".getBytes()));
+        assertEquals("webp", PerfumeServiceImpl.detectImageExtension("RIFF\0\0\0\0WEBPVP8 ".getBytes()));
+        assertNull(PerfumeServiceImpl.detectImageExtension("hello".getBytes()));
+        assertNull(PerfumeServiceImpl.detectImageExtension(new byte[0]));
     }
 }

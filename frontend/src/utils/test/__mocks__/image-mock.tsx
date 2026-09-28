@@ -1,1 +1,3 @@
-export default "";
+const imageMock = "";
+
+export default imageMock;

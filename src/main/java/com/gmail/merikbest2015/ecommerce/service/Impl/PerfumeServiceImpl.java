@@ -18,16 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import static com.gmail.merikbest2015.ecommerce.constants.ErrorMessage.FILE_NOT_SAVED;
+import static com.gmail.merikbest2015.ecommerce.constants.ErrorMessage.INVALID_IMAGE_FILE;
 import static com.gmail.merikbest2015.ecommerce.constants.ErrorMessage.PERFUME_NOT_FOUND;
 
 @Service
@@ -38,9 +38,6 @@ public class PerfumeServiceImpl implements PerfumeService {
 
     @Value("${upload.path}")
     private String uploadPath;
-
-    @Value("${server.public-url}")
-    private String publicUrl;
 
     @Override
     public Perfume getPerfumeById(Long perfumeId) {
@@ -108,17 +105,53 @@ public class PerfumeServiceImpl implements PerfumeService {
 
     private String storeFile(MultipartFile multipartFile) {
         String originalName = Paths.get(String.valueOf(multipartFile.getOriginalFilename())).getFileName().toString();
-        String fileName = UUID.randomUUID() + "." + originalName.replaceAll("[^a-zA-Z0-9._-]", "_");
+        byte[] content;
+        try {
+            content = multipartFile.getBytes();
+        } catch (IOException e) {
+            throw new ApiRequestException(FILE_NOT_SAVED + originalName, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        // Detect the type from the file content, not from the (client supplied) name or content type
+        String extension = detectImageExtension(content);
+        if (extension == null) {
+            throw new ApiRequestException(INVALID_IMAGE_FILE, HttpStatus.BAD_REQUEST);
+        }
+        String baseName = originalName.contains(".") ? originalName.substring(0, originalName.lastIndexOf('.')) : originalName;
+        String fileName = UUID.randomUUID() + "." + baseName.replaceAll("[^a-zA-Z0-9_-]", "_") + "." + extension;
         try {
             Path directory = Paths.get(uploadPath).toAbsolutePath().normalize();
             Files.createDirectories(directory);
-            try (InputStream inputStream = multipartFile.getInputStream()) {
-                Files.copy(inputStream, directory.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-            }
+            Files.write(directory.resolve(fileName), content);
         } catch (IOException e) {
-            throw new ApiRequestException("Could not save file: " + originalName, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiRequestException(FILE_NOT_SAVED + originalName, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return publicUrl + "/img/" + fileName;
+        // Relative path; the frontend prefixes it with the backend URL
+        return "/img/" + fileName;
+    }
+
+    static String detectImageExtension(byte[] content) {
+        if (startsWith(content, 0, 0xFF, 0xD8, 0xFF)) {
+            return "jpg";
+        } else if (startsWith(content, 0, 0x89, 'P', 'N', 'G', 0x0D, 0x0A, 0x1A, 0x0A)) {
+            return "png";
+        } else if (startsWith(content, 0, 'G', 'I', 'F', '8')) {
+            return "gif";
+        } else if (startsWith(content, 0, 'R', 'I', 'F', 'F') && startsWith(content, 8, 'W', 'E', 'B', 'P')) {
+            return "webp";
+        }
+        return null;
+    }
+
+    private static boolean startsWith(byte[] content, int offset, int... signature) {
+        if (content == null || content.length < offset + signature.length) {
+            return false;
+        }
+        for (int i = 0; i < signature.length; i++) {
+            if ((content[offset + i] & 0xFF) != signature[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

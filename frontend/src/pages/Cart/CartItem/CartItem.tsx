@@ -22,6 +22,8 @@ const CartItem: FC<PropsType> = ({
 
     useEffect(() => {
         setPerfumeCount(perfumeInCart);
+    // Intentionally not re-run when perfumeInCart changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handlePerfumesCount = (value: number | null): void => {

@@ -44,7 +44,7 @@ const AddPerfume: FC = (): ReactElement => {
         return () => {
             dispatch(resetAdminState(LoadingStatus.LOADING));
         };
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         if (isPerfumeAdded) {
@@ -55,7 +55,7 @@ const AddPerfume: FC = (): ReactElement => {
             });
             dispatch(resetAdminState(LoadingStatus.SUCCESS));
         }
-    }, [isPerfumeAdded]);
+    }, [isPerfumeAdded, dispatch]);
 
     const onFormSubmit = (data: AddPerfumeData): void => {
         const bodyFormData: FormData = new FormData();
@@ -160,7 +160,7 @@ const AddPerfume: FC = (): ReactElement => {
                             placeholder={"Enter the base notes"}
                             disabled={ispPerfumeLoading}
                         />
-                        <Upload name={"file"} onChange={handleUpload} beforeUpload={() => false}>
+                        <Upload name={"file"} accept={"image/jpeg,image/png,image/gif,image/webp"} onChange={handleUpload} beforeUpload={() => false}>
                             <Button icon={<UploadOutlined />} style={{ marginTop: 22 }}>
                                 Click to Upload
                             </Button>

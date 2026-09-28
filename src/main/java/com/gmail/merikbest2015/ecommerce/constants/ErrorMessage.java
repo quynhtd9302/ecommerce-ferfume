@@ -21,4 +21,6 @@ public class ErrorMessage {
     public static final String FILL_IN_THE_INPUT_FIELD = "Fill in the input field";
     public static final String EMPTY_PHONE_NUMBER = "Phone number cannot be empty";
     public static final String EMPTY_POST_INDEX = "Post index cannot be empty";
+    public static final String INVALID_IMAGE_FILE = "Only JPG, PNG, GIF or WEBP images can be uploaded.";
+    public static final String FILE_NOT_SAVED = "Could not save file: ";
 }

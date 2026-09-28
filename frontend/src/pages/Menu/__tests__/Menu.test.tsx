@@ -63,6 +63,17 @@ describe("Menu", () => {
         expect(mockDispatchFn).nthCalledWith(1, expect.any(Function));
     });
 
+    it("should fetch all Perfumes when the page is opened without navigation state", () => {
+        jest.spyOn(routeData, "useLocation").mockReturnValue({
+            pathname: MENU,
+            hash: "",
+            search: "",
+            state: undefined
+        });
+        mountWithStore(<Menu />);
+        expect(mockDispatchFn).nthCalledWith(1, expect.any(Function));
+    });
+
     it("should change perfumes category", () => {
         testMenuCheckboxSection(0, "Brand", CheckboxCategoryFilter.PERFUMERS);
     });

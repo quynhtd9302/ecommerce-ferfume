@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer {
 
-    @Value("${hostname}")
+    @Value("${app.frontend-host}")
     private String hostname;
 
     @Value("${upload.path}")

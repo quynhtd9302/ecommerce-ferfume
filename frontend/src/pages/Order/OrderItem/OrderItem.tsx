@@ -3,6 +3,7 @@ import { Card, Col, Typography } from "antd";
 
 import { PerfumeResponse } from "../../../types/types";
 import "./OrderItem.css";
+import { getImageUrl } from "../../../utils/image-url";
 
 type PropsType = {
     perfume: PerfumeResponse;
@@ -14,7 +15,7 @@ const OrderItem: FC<PropsType> = ({ perfume, quantity }): ReactElement => {
         <Col span={12}>
             <Card
                 className={"menu-card"}
-                cover={<img className={"menu-card-image"} alt={perfume.perfumeTitle} src={perfume.filename} />}
+                cover={<img className={"menu-card-image"} alt={perfume.perfumeTitle} src={getImageUrl(perfume.filename)} />}
             >
                 <div className={"menu-content"}>
                     <Typography.Text strong>{perfume.perfumer}</Typography.Text>

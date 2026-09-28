@@ -71,8 +71,15 @@ jobs:
       - name: Test
         run: npm test -- --watchAll=false
 
+      # CI=true (set by GitHub Actions) makes the build fail on ESLint warnings
       - name: Build
         run: npm run build
-        env:
-          # Existing ESLint warnings should not fail the production build
-          CI: 'false'
+
+  docker:
+    name: Docker images
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build backend and frontend images
+        run: docker compose build
