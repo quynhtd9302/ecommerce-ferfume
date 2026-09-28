@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import React from "react";
 import { Button } from "antd";
 
@@ -11,11 +12,11 @@ import { LoadingStatus } from "../../../../types/types";
 import { mockFullPerfumeResponse } from "../../../../utils/test/__mocks__/perfumes-mock";
 import EditPerfume from "../EditPerfume";
 
-window.scrollTo = jest.fn();
+window.scrollTo = vi.fn();
 
 describe("EditPerfume", () => {
     const mockRootStore = createMockRootState(LoadingStatus.SUCCESS);
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();

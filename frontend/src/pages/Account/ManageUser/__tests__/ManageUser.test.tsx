@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import React from "react";
 
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../utils/test/testHelper";
@@ -8,7 +9,7 @@ import {mockOrders} from "../../../../utils/test/__mocks__/orders-mock";
 import ManageUser from "../ManageUser";
 
 describe("ManageUser", () => {
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();

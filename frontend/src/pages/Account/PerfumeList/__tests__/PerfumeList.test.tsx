@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import React from "react";
 import { Button, Input, Pagination } from "antd";
 
@@ -12,7 +13,7 @@ import PerfumeList from "../PerfumeList";
 
 describe("PerfumeList", () => {
     const mockRootStore = createMockRootState(LoadingStatus.LOADED);
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
@@ -64,8 +65,8 @@ describe("PerfumeList", () => {
     });
 
     it("should render delete notification", () => {
-        window.scrollTo = jest.fn();
-        const pushSpy = jest.spyOn(window, "scrollTo");
+        window.scrollTo = vi.fn();
+        const pushSpy = vi.spyOn(window, "scrollTo");
         const mockStore = { ...mockRootStore, admin: { ...mockRootStore.admin, isPerfumeDeleted: true } };
         mountWithStore(<PerfumeList />, mockStore);
         expect(pushSpy).toHaveBeenCalled();

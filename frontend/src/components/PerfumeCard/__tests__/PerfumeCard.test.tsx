@@ -10,7 +10,7 @@ describe("PerfumeCard", () => {
 
     it("should render edit and delete buttons", () => {
         const wrapper = mountWithStore(
-            <PerfumeCard perfume={mockPerfume} colSpan={8} edit={true} onOpenDelete={jest.fn()} />
+            <PerfumeCard perfume={mockPerfume} colSpan={8} edit={true} onOpenDelete={vi.fn()} />
         );
         expect(wrapper.find(Button).at(0).text().includes("Edit")).toBe(true);
         expect(wrapper.find(Button).at(1).text().includes("Delete")).toBe(true);
@@ -20,7 +20,7 @@ describe("PerfumeCard", () => {
 
     it("should render add to cart button", () => {
         const wrapper = mountWithStore(
-            <PerfumeCard perfume={mockPerfume} colSpan={8} edit={false} onOpenDelete={jest.fn()} />
+            <PerfumeCard perfume={mockPerfume} colSpan={8} edit={false} onOpenDelete={vi.fn()} />
         );
         expect(wrapper.find(Button).at(0).text().includes("Add to cart")).toBe(true);
         expect(wrapper.text().includes(`${mockPerfume.reviewsCount} reviews`)).toBe(true);
@@ -28,7 +28,7 @@ describe("PerfumeCard", () => {
     });
 
     it("should click onClickAddToCart", () => {
-        const mockOnOpenDelete = jest.fn()
+        const mockOnOpenDelete = vi.fn()
         const wrapper = mountWithStore(
             <PerfumeCard perfume={mockPerfume} colSpan={8} edit={false} onOpenDelete={mockOnOpenDelete} />
         );
@@ -36,7 +36,7 @@ describe("PerfumeCard", () => {
     });
 
     it("should click onOpenDelete", () => {
-        const mockOnOpenDelete = jest.fn()
+        const mockOnOpenDelete = vi.fn()
         const wrapper = mountWithStore(
             <PerfumeCard perfume={mockPerfume} colSpan={8} edit={true} onOpenDelete={mockOnOpenDelete} />
         );

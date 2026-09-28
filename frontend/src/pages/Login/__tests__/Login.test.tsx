@@ -1,5 +1,5 @@
+import type { Mock } from "vitest";
 import React from "react";
-import ReactRouter from "react-router";
 import { Alert, Input } from "antd";
 import { createMemoryHistory } from "history";
 import { Link } from "react-router-dom";
@@ -12,14 +12,21 @@ import SocialButton from "../SocialButton/SocialButton";
 import { FORGOT } from "../../../constants/routeConstants";
 import Login from "../Login";
 
-window.scrollTo = jest.fn();
+const { mockUseParams } = vi.hoisted(() => ({ mockUseParams: vi.fn() }));
+
+vi.mock("react-router-dom", async (importOriginal) => ({
+    ...(await importOriginal<typeof import("react-router-dom")>()),
+    useParams: mockUseParams
+}));
+
+window.scrollTo = vi.fn();
 
 describe("Login", () => {
     const mockRootStore = createMockRootState(LoadingStatus.LOADING);
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ code: "test" });
+        mockUseParams.mockReturnValue({ code: "test" });
         mockDispatchFn = mockDispatch();
     });
 
@@ -54,7 +61,7 @@ describe("Login", () => {
 
     it("should click Forgot password Link", () => {
         const history = createMemoryHistory();
-        const pushSpy = jest.spyOn(history, "push");
+        const pushSpy = vi.spyOn(history, "push");
         const wrapper = mountWithStore(<Login />, mockRootStore, history);
         wrapper.find(Link).simulate("click", { button: 0 });
         expect(pushSpy).toHaveBeenCalled();

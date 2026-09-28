@@ -3,18 +3,15 @@ package com.gmail.tdquynh09.ecommerce.mapper;
 import com.gmail.tdquynh09.ecommerce.domain.Perfume;
 import com.gmail.tdquynh09.ecommerce.dto.perfume.PerfumeRequest;
 import com.gmail.tdquynh09.ecommerce.dto.perfume.FullPerfumeResponse;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.gmail.tdquynh09.ecommerce.util.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
 public class PerfumeMapperTest {
 
     @Autowired

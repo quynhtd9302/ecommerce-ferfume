@@ -1,8 +1,9 @@
+import type { Mock } from "vitest";
 import React from "react";
-import { Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../utils/test/testHelper";
-import { LoadingStatus } from "../../../types/types";
+import { LoadingStatus, UserRoles } from "../../../types/types";
 import Account from "../Account";
 import {
     ACCOUNT,
@@ -28,7 +29,7 @@ import ManageUser from "../ManageUser/ManageUser";
 
 describe("Account", () => {
     const mockRootStore = createMockRootState(LoadingStatus.SUCCESS);
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
@@ -65,5 +66,24 @@ describe("Account", () => {
         expect(pathMap[ACCOUNT_ADMIN_ORDERS]).toBe(OrdersList);
         expect(pathMap[ACCOUNT_ADMIN_USERS]).toBe(UsersList);
         expect(pathMap[`${ACCOUNT_ADMIN_USERS}/:id`]).toBe(ManageUser);
+    });
+
+    it("should not redirect away from admin pages while the user is still loading", () => {
+        const wrapper = mountWithStore(<Account />);
+        expect(wrapper.find(Redirect).exists()).toBe(false);
+    });
+
+    it("should redirect a non-admin user away from admin pages", () => {
+        const mockState = {
+            ...mockRootStore,
+            user: { ...mockRootStore.user, user: { ...mockRootStore.user.user, roles: [UserRoles.USER] } }
+        };
+        const wrapper = mountWithStore(<Account />, mockState);
+        expect(wrapper.find(Redirect).exists()).toBe(true);
+    });
+
+    it("should not redirect an admin", () => {
+        const wrapper = mountWithStore(<Account />, mockRootStore);
+        expect(wrapper.find(Redirect).exists()).toBe(false);
     });
 });

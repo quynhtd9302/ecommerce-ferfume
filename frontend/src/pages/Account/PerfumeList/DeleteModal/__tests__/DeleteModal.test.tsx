@@ -9,8 +9,8 @@ describe("DeleteModal", () => {
         const wrapper = mountWithStore(
             <DeleteModal
                 visible={true}
-                deletePerfumeHandler={jest.fn()}
-                handleCancel={jest.fn()}
+                deletePerfumeHandler={vi.fn()}
+                handleCancel={vi.fn()}
                 perfumeInfo={mockPerfumesResponse[0]}
             />
         );

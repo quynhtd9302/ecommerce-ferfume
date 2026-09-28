@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
+import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 import { Col, Row } from "antd";
@@ -36,18 +36,14 @@ import PersonalOrdersList from "./PersonalOrdersList/PersonalOrdersList";
 const Account: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const usersData = useSelector(selectUserFromUserState);
-    const [isAdmin, setIsAdmin] = useState<boolean>(false);
+    // Derived directly from the store: with a separate state the first render after the user
+    // data arrived still saw isAdmin=false and redirected admins away from /account/admin/* (e.g. on refresh)
+    const isAdmin = usersData?.roles?.[0] === UserRoles.ADMIN;
 
     useEffect(() => {
         dispatch(resetAuthState());
         dispatch(fetchUserInfo());
     }, [dispatch]);
-
-    useEffect(() => {
-        if (usersData) {
-            setIsAdmin(usersData.roles![0] === UserRoles.ADMIN);
-        }
-    }, [usersData]);
 
     return (
         <ContentWrapper>
@@ -85,7 +81,8 @@ const Account: FC = (): ReactElement => {
                             <Route exact path={`${ACCOUNT_ADMIN_USERS}/:id`} component={ManageUser} />
                         </>
                     ) : (
-                        <Redirect to={ACCOUNT} />
+                        // Wait for the user data before deciding that the admin pages are not allowed
+                        usersData && <Redirect to={ACCOUNT} />
                     )}
                 </Col>
             </Row>

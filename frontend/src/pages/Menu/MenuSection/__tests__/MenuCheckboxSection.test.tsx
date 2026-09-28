@@ -11,7 +11,7 @@ describe("MenuCheckboxSection", () => {
         const wrapper = mountWithStore(
             <MenuCheckboxSection
                 title={"Brand"}
-                onChange={jest.fn()}
+                onChange={vi.fn()}
                 category={CheckboxCategoryFilter.PERFUMERS}
                 data={perfumer}
                 selectedValues={[]}

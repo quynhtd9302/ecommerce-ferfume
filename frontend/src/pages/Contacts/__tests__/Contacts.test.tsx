@@ -3,7 +3,7 @@ import React from "react";
 import { mountWithStore } from "../../../utils/test/testHelper";
 import Contacts from "../Contacts";
 
-window.scrollTo = jest.fn();
+window.scrollTo = vi.fn();
 
 describe("Contacts", () => {
     it("should render correctly", () => {

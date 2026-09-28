@@ -14,8 +14,8 @@ describe("CartItem", () => {
             <CartItem
                 perfume={mockPerfume}
                 perfumeInCart={mockPerfumeCount}
-                onChangePerfumeItemCount={jest.fn()}
-                deleteFromCart={jest.fn()}
+                onChangePerfumeItemCount={vi.fn()}
+                deleteFromCart={vi.fn()}
             />
         );
         expect(wrapper.find(InputNumber).at(0).prop("value")).toBe(mockPerfumeCount);
@@ -23,17 +23,17 @@ describe("CartItem", () => {
     });
 
     it("should handle Perfumes Count", () => {
-        const mockOnChangePerfumeItemCount = jest.fn()
+        const mockOnChangePerfumeItemCount = vi.fn()
         const wrapper = mountWithStore(
             <CartItem
                 perfume={mockPerfume}
                 perfumeInCart={mockPerfumeCount}
                 onChangePerfumeItemCount={mockOnChangePerfumeItemCount}
-                deleteFromCart={jest.fn()}
+                deleteFromCart={vi.fn()}
             />
         );
         expect(wrapper.find(InputNumber).at(0).prop("value")).toBe(11);
-        wrapper.find(InputNumber).find("input").at(0).simulate("change", { target: { value: 12 } });
+        wrapper.find(InputNumber).find("input").at(0).simulate("change", { target: { value: "12" } });
         expect(wrapper.find(InputNumber).at(0).prop("value")).toBe(12);
         expect(mockOnChangePerfumeItemCount).toHaveBeenCalled();
         expect(mockOnChangePerfumeItemCount).toHaveBeenCalledWith(17, 12);

@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import React from "react";
 import { Table } from "antd";
 
@@ -8,7 +9,7 @@ import UsersList from "../UsersList";
 
 describe("UsersList", () => {
     const mockRootStore = createMockRootState(LoadingStatus.LOADED);
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();

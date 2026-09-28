@@ -7,7 +7,7 @@ import ProductInfo from "../ProductInfo";
 
 describe("ProductInfo", () => {
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<ProductInfo perfume={mockFullPerfumeResponse} reviewsLength={11} addToCart={jest.fn()} />);
+        const wrapper = mountWithStore(<ProductInfo perfume={mockFullPerfumeResponse} reviewsLength={11} addToCart={vi.fn()} />);
         expect(wrapper.text().includes(mockFullPerfumeResponse.perfumeTitle)).toBe(true);
         expect(wrapper.text().includes(mockFullPerfumeResponse.perfumer)).toBe(true);
         expect(wrapper.text().includes(mockFullPerfumeResponse.type)).toBe(true);

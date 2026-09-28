@@ -1,11 +1,11 @@
 # ecommerce-ferfume
 
-Online perfume store: **Spring Boot 2.3 (Java)** backend + **React 17 / TypeScript** frontend.
+Online perfume store: **Spring Boot 3.5 (Java 17+)** backend + **React 17 / TypeScript (Vite)** frontend.
 
 ## Requirements
 
-- JDK 8+ (tested with JDK 21)
-- Node.js 16+ (tested with Node 22)
+- JDK 17+ (tested with JDK 21)
+- Node.js 20.19+ (tested with Node 22)
 - PostgreSQL (or Docker)
 
 ## Run everything with Docker
@@ -46,8 +46,11 @@ Swagger UI: http://localhost:8080/swagger-ui.html
 ```bash
 cd frontend
 npm install
-npm start
+npm start                       # Vite dev server
 ```
+
+Other scripts: `npm run build` (type check + production build into `frontend/build`), `npm run preview`
+(serve that build), `npm run lint`, `npm test`.
 
 ### Demo accounts
 
@@ -72,7 +75,7 @@ All settings live in `src/main/resources/application.properties` and can be over
 | `FACEBOOK_CLIENT_ID` / `FACEBOOK_CLIENT_SECRET` | `changeme` | Facebook OAuth2 login |
 | `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | `changeme` | GitHub OAuth2 login |
 
-Frontend (`frontend/.env`):
+Frontend (`frontend/.env`, read by Vite at dev/build time):
 
 | Variable | Default | Description |
 |---|---|---|
@@ -94,10 +97,10 @@ Frontend (`frontend/.env`):
 # backend (needs a PostgreSQL database named "perfumetest")
 ./mvnw test
 
-# frontend
+# frontend (Vitest)
 cd frontend
-CI=true npm test
-npx eslint --ext .ts,.tsx src   # CI fails the build on ESLint warnings
+npm test
+npm run lint                    # CI fails on any ESLint warning
 ```
 
 CI (GitHub Actions, `.github/workflows/ci.yml`) runs the backend tests, the frontend type check / tests / build and

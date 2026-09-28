@@ -26,7 +26,7 @@ describe("HomePageTheme", () => {
     
     const testClickLink = (linkId: number, stateId: string): void => {
         const history = createMemoryHistory();
-        const pushSpy = jest.spyOn(history, "push");
+        const pushSpy = vi.spyOn(history, "push");
         const wrapper = mountWithStore(<HomePageTheme />, mockRootStore, history);
         wrapper.find(Link).at(linkId).simulate("click", { button: 0 });
         expect(pushSpy).toHaveBeenCalled();

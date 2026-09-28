@@ -17,7 +17,7 @@ describe("CarouselImageSlider", () => {
 
     it("should click Link", () => {
         const history = createMemoryHistory();
-        const pushSpy = jest.spyOn(history, "push");
+        const pushSpy = vi.spyOn(history, "push");
         const wrapper = mountWithStore(<CarouselImageSlider />, mockRootStore, history);
         wrapper.find(Link).at(0).simulate("click", { button: 0 });
         expect(pushSpy).toHaveBeenCalled();

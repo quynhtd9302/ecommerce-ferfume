@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import React from "react";
 import { Button, InputNumber } from "antd";
 
@@ -9,12 +10,12 @@ import CartItem from "../CartItem/CartItem";
 import RemoveButton from "../CartItem/RemoveButton";
 import Cart from "../Cart";
 
-window.scrollTo = jest.fn();
+window.scrollTo = vi.fn();
 
 describe("Cart", () => {
     const mockRootStore = createMockRootState(LoadingStatus.SUCCESS);
     const mockStore = {...mockRootStore, cart: {...mockRootStore.cart, perfumes: mockCartPerfumesResponse}};
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
@@ -45,7 +46,7 @@ describe("Cart", () => {
     it("should change Perfume Item Count", () => {
         localStorage.setItem("perfumes", "[[17,1],[27,1]]");
         const wrapper = mountWithStore(<Cart />, mockStore);
-        wrapper.find(CartItem).at(0).find(InputNumber).find("input").at(0).simulate("change", { target: { value: 11 } });
+        wrapper.find(CartItem).at(0).find(InputNumber).find("input").at(0).simulate("change", { target: { value: "11" } });
         expect(mockDispatchFn).nthCalledWith(2, { payload: mockCartPerfumesResponse, type: "cart/calculateCartPrice" });
     });
     
