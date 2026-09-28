@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.ecommerce.enums.Role;
 import com.gmail.merikbest2015.ecommerce.domain.User;
 import com.gmail.merikbest2015.ecommerce.dto.CaptchaResponse;
 import com.gmail.merikbest2015.ecommerce.exception.ApiRequestException;
+import com.gmail.merikbest2015.ecommerce.exception.CaptchaException;
 import com.gmail.merikbest2015.ecommerce.exception.EmailException;
 import com.gmail.merikbest2015.ecommerce.exception.PasswordConfirmationException;
 import com.gmail.merikbest2015.ecommerce.exception.PasswordException;
@@ -72,8 +73,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     @Transactional
     public String registerUser(User user, String captcha, String password2) {
-        String url = String.format(captchaUrl, secret, captcha);
-        restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponse.class);
+        if (secret != null && !secret.isEmpty()) {
+            String url = String.format(captchaUrl, secret, captcha);
+            CaptchaResponse response = restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponse.class);
+            if (response == null || !response.isSuccess()) {
+                throw new CaptchaException("Fill captcha.");
+            }
+        }
 
         if (user.getPassword() != null && !user.getPassword().equals(password2)) {
             throw new PasswordException(PASSWORDS_DO_NOT_MATCH);

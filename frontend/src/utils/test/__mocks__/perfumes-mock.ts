@@ -20,30 +20,30 @@ export const mockFullPerfumeResponse: FullPerfumeResponse = {
     year: 2010
 };
 
-// export const mockCartPerfumesResponse: Array<PerfumeResponse> = [
-//     {
-//         id: 17,
-//         perfumeTitle: "Le Gemme Ashlemah",
-//         perfumer: "Bvlgari",
-//         price: 171,
-//         perfumeRating: 0,
-//         filename:
-//             "https://perfumeweb2.s3.eu-central-1.amazonaws.com/956bbe26-c07d-4e32-a567-5e4306388c0e.Bvlgari Le Gemme Ashlemah.jpg",
-//         reviewsCount: 0,
-//         volume: "100"
-//     },
-//     {
-//         id: 27,
-//         perfumeTitle: "Good Girl",
-//         perfumer: "Carolina Herrera",
-//         price: 156,
-//         perfumeRating: 0,
-//         filename:
-//             "https://perfumeweb2.s3.eu-central-1.amazonaws.com/184c9da2-2445-4b01-87b8-b4f8b5f6ab8c.Carolina Herrera Good Girl.jpg",
-//         reviewsCount: 0,
-//         volume: "150"
-//     }
-// ];
+export const mockCartPerfumesResponse: Array<PerfumeResponse> = [
+    {
+        id: 17,
+        perfumeTitle: "Le Gemme Ashlemah",
+        perfumer: "Bvlgari",
+        price: 171,
+        perfumeRating: 0,
+        filename:
+            "https://perfumeweb2.s3.eu-central-1.amazonaws.com/956bbe26-c07d-4e32-a567-5e4306388c0e.Bvlgari Le Gemme Ashlemah.jpg",
+        reviewsCount: 0,
+        volume: "100"
+    },
+    {
+        id: 27,
+        perfumeTitle: "Good Girl",
+        perfumer: "Carolina Herrera",
+        price: 156,
+        perfumeRating: 0,
+        filename:
+            "https://perfumeweb2.s3.eu-central-1.amazonaws.com/184c9da2-2445-4b01-87b8-b4f8b5f6ab8c.Carolina Herrera Good Girl.jpg",
+        reviewsCount: 0,
+        volume: "150"
+    }
+];
 
 export const mockPerfumesResponse: Array<PerfumeResponse> = [
     {

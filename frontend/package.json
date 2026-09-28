@@ -32,8 +32,8 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
-    "build": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -66,6 +66,7 @@
     "@types/redux-mock-store": "^1.0.3",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
     "babel-jest": "^26.6.0",
+    "cross-env": "^7.0.3",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.2",
     "identity-obj-proxy": "^3.0.0",
@@ -76,5 +77,8 @@
     "redux-mock-store": "^1.5.4",
     "sass": "^1.55.0",
     "ts-jest": "^26.5.6"
+  },
+  "overrides": {
+    "cheerio": "1.0.0-rc.12"
   }
 }

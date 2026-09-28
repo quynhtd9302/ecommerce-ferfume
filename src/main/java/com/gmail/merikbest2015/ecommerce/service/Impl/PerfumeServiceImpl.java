@@ -1,7 +1,5 @@
 package com.gmail.merikbest2015.ecommerce.service.Impl;
 
-//import com.amazonaws.services.s3.AmazonS3;
-//import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.dto.perfume.PerfumeSearchRequest;
 import com.gmail.merikbest2015.ecommerce.enums.SearchPerfume;
@@ -19,9 +17,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -34,10 +35,12 @@ import static com.gmail.merikbest2015.ecommerce.constants.ErrorMessage.PERFUME_N
 public class PerfumeServiceImpl implements PerfumeService {
 
     private final PerfumeRepository perfumeRepository;
-//    private final AmazonS3 amazonS3client;
 
-    @Value("${amazon.s3.bucket.name}")
-    private String bucketName;
+    @Value("${upload.path}")
+    private String uploadPath;
+
+    @Value("${server.public-url}")
+    private String publicUrl;
 
     @Override
     public Perfume getPerfumeById(Long perfumeId) {
@@ -91,22 +94,31 @@ public class PerfumeServiceImpl implements PerfumeService {
     @Override
     @Transactional
     public Perfume savePerfume(Perfume perfume, MultipartFile multipartFile) {
-        if (multipartFile == null) {
+        if (multipartFile == null || multipartFile.isEmpty()) {
             Logger.getAnonymousLogger().info("File not uploaded");
-//            perfume.setFilename(amazonS3client.getUrl(bucketName, "empty.jpg").toString());
-        } else {
-            File file = new File(multipartFile.getOriginalFilename());
-            try (FileOutputStream fos = new FileOutputStream(file)) {
-                fos.write(multipartFile.getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (perfume.getId() != null && perfume.getFilename() == null) {
+                perfumeRepository.findById(perfume.getId())
+                        .ifPresent(existing -> perfume.setFilename(existing.getFilename()));
             }
-            String fileName = UUID.randomUUID().toString() + "." + multipartFile.getOriginalFilename();
-//            amazonS3client.putObject(new PutObjectRequest(bucketName, fileName, file));
-//            perfume.setFilename(amazonS3client.getUrl(bucketName, fileName).toString());
-            file.delete();
+        } else {
+            perfume.setFilename(storeFile(multipartFile));
         }
         return perfumeRepository.save(perfume);
+    }
+
+    private String storeFile(MultipartFile multipartFile) {
+        String originalName = Paths.get(String.valueOf(multipartFile.getOriginalFilename())).getFileName().toString();
+        String fileName = UUID.randomUUID() + "." + originalName.replaceAll("[^a-zA-Z0-9._-]", "_");
+        try {
+            Path directory = Paths.get(uploadPath).toAbsolutePath().normalize();
+            Files.createDirectories(directory);
+            try (InputStream inputStream = multipartFile.getInputStream()) {
+                Files.copy(inputStream, directory.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (IOException e) {
+            throw new ApiRequestException("Could not save file: " + originalName, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return publicUrl + "/img/" + fileName;
     }
 
     @Override
