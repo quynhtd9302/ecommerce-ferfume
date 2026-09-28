@@ -4,11 +4,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
 COPY . .
-# Backend URL as seen from the user's browser (embedded into the bundle at build time)
+# Backend URL as seen from the user's browser (embedded into the bundle by Vite at build time)
 ARG REACT_APP_API_URL=http://localhost:8080
 ENV REACT_APP_API_URL=$REACT_APP_API_URL
-# Lint warnings are enforced in CI; don't let them block an image build
-ENV CI=false
 RUN npm run build
 
 # ---- serve ----

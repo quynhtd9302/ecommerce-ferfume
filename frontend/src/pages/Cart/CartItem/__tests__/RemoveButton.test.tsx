@@ -6,7 +6,7 @@ import RemoveButton from "../RemoveButton";
 
 describe("RemoveButton", () => {
     it("should render correctly and click deleteFromCart", () => {
-        const mockDeleteFromCart = jest.fn();
+        const mockDeleteFromCart = vi.fn();
         const wrapper = mountWithStore(<RemoveButton perfumeId={1} deleteFromCart={mockDeleteFromCart} />);
         expect(wrapper.find(Button).text().includes("Remove")).toBe(true);
         wrapper.find(Button).simulate("click");

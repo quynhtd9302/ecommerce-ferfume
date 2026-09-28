@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import React from "react";
 import { Button, Form } from "antd";
 
@@ -13,7 +14,7 @@ import PersonalData from "../PersonalData";
 
 describe("PersonalData", () => {
     const mockRootStore = createMockRootState(LoadingStatus.LOADED);
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();

@@ -1,5 +1,5 @@
+import type { Mock } from "vitest";
 import React from "react";
-import routeData from "react-router";
 import {Checkbox, Input, Pagination, Radio} from "antd";
 
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../utils/test/testHelper";
@@ -14,14 +14,21 @@ import { mockPerfumesResponse } from "../../../utils/test/__mocks__/perfumes-moc
 import PerfumeCard from "../../../components/PerfumeCard/PerfumeCard";
 import Menu, { CheckboxCategoryFilter } from "../Menu";
 
-window.scrollTo = jest.fn();
+const { mockUseLocation } = vi.hoisted(() => ({ mockUseLocation: vi.fn() }));
+
+vi.mock("react-router-dom", async (importOriginal) => ({
+    ...(await importOriginal<typeof import("react-router-dom")>()),
+    useLocation: mockUseLocation
+}));
+
+window.scrollTo = vi.fn();
 
 describe("Menu", () => {
     const mockRootStore = createMockRootState(LoadingStatus.LOADED);
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
-        jest.spyOn(routeData, "useLocation").mockReturnValue({
+        mockUseLocation.mockReturnValue({
             pathname: MENU,
             hash: "",
             search: "",
@@ -42,7 +49,7 @@ describe("Menu", () => {
     });
 
     it("should fetch Perfumes by gender", () => {
-        jest.spyOn(routeData, "useLocation").mockReturnValue({
+        mockUseLocation.mockReturnValue({
             pathname: MENU,
             hash: "",
             search: "",
@@ -53,7 +60,7 @@ describe("Menu", () => {
     });
 
     it("should fetch all Perfumes", () => {
-        jest.spyOn(routeData, "useLocation").mockReturnValue({
+        mockUseLocation.mockReturnValue({
             pathname: MENU,
             hash: "",
             search: "",
@@ -64,7 +71,7 @@ describe("Menu", () => {
     });
 
     it("should fetch all Perfumes when the page is opened without navigation state", () => {
-        jest.spyOn(routeData, "useLocation").mockReturnValue({
+        mockUseLocation.mockReturnValue({
             pathname: MENU,
             hash: "",
             search: "",

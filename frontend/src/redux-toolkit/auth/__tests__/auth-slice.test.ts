@@ -33,7 +33,7 @@ describe("auth slice tests", () => {
     const mock = new MockAdapter(axios);
     const mockTestCode = "test_code";
     const history = createMemoryHistory();
-    const pushSpy = jest.spyOn(history, "push");
+    const pushSpy = vi.spyOn(history, "push");
     let state = store.getState().auth;
 
     beforeEach(() => {

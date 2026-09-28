@@ -1,10 +1,11 @@
+import type { Mock } from "vitest";
 import React from "react";
 
 import { mockDispatch, mountWithStore } from "../../../../utils/test/testHelper";
 import OrdersList from "../OrdersList";
 
 describe("OrdersList", () => {
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();

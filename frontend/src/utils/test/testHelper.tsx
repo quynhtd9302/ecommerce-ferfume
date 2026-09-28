@@ -17,8 +17,8 @@ import { mockUserAdmin } from "./__mocks__/users-mock";
 
 // @ts-ignore
 export const mockDispatch = () => {
-    const useDispatchSpy = jest.spyOn(redux, "useDispatch");
-    const mockDispatchFn = jest.fn();
+    const useDispatchSpy = vi.spyOn(redux, "useDispatch");
+    const mockDispatchFn = vi.fn();
     useDispatchSpy.mockReturnValue(mockDispatchFn);
     return mockDispatchFn;
 };

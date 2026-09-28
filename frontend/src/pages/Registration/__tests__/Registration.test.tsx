@@ -1,14 +1,15 @@
+import type { Mock } from "vitest";
 import React from "react";
 
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../utils/test/testHelper";
 import { LoadingStatus } from "../../../types/types";
 import Registration from "../Registration";
 
-window.scrollTo = jest.fn();
+window.scrollTo = vi.fn();
 
 describe("Registration", () => {
     const mockRootStore = createMockRootState(LoadingStatus.LOADED);
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();

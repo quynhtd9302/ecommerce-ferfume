@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import React from "react";
 import { Button, Input } from "antd";
 
@@ -13,7 +14,7 @@ describe("Order", () => {
         ...mockRootStore,
         cart: { ...mockRootStore.cart, totalPrice: 777, perfumes: mockCartPerfumesResponse }
     };
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();

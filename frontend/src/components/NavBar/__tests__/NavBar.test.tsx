@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import React from "react";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../utils/test/testHelper";
@@ -7,7 +8,7 @@ import NavBar from "../NavBar";
 
 describe("NavBar", () => {
     const mockRootStore = createMockRootState(LoadingStatus.SUCCESS);
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();

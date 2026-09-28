@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import React from "react";
 import { Alert, Button } from "antd";
 
@@ -12,7 +13,7 @@ import ChangePassword from "../ChangePassword";
 
 describe("ChangePassword", () => {
     const mockRootStore = createMockRootState(LoadingStatus.SUCCESS);
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();

@@ -7,7 +7,7 @@ import HomePageTheme from "../HomePageTheme/HomePageTheme";
 import PerfumeCardsSlider from "../PerfumeCardsSlider/PerfumeCardsSlider";
 import Home from "../Home";
 
-window.scrollTo = jest.fn();
+window.scrollTo = vi.fn();
 
 describe("Home", () => {
     it("should render correctly", () => {

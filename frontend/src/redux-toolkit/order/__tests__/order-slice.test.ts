@@ -17,7 +17,7 @@ import { initialState } from "../order-slice";
 
 describe("order slice tests", () => {
     const history = createMemoryHistory();
-    const pushSpy = jest.spyOn(history, "push");
+    const pushSpy = vi.spyOn(history, "push");
     const mock = new MockAdapter(axios);
     let state = store.getState().order;
 

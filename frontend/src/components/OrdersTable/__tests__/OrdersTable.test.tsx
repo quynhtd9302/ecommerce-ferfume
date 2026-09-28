@@ -5,10 +5,8 @@ import { mockOrders } from "../../../utils/test/__mocks__/orders-mock";
 import OrdersTable from "../OrdersTable";
 
 describe("OrdersTable", () => {
-    let mockDispatchFn: jest.Mock;
-
     beforeEach(() => {
-        mockDispatchFn = mockDispatch();
+        mockDispatch();
     });
 
     it("should render correctly", () => {

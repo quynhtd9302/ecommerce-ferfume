@@ -65,13 +65,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Type check
-        run: npx tsc --noEmit
+      - name: Lint
+        run: npm run lint
 
       - name: Test
-        run: npm test -- --watchAll=false
+        run: npm test
 
-      # CI=true (set by GitHub Actions) makes the build fail on ESLint warnings
+      # Type check (tsc) + Vite production build
       - name: Build
         run: npm run build
 

@@ -1,5 +1,5 @@
+import type { Mock } from "vitest";
 import React from "react";
-import ReactRouter from "react-router";
 import { Alert } from "antd";
 
 import {createMockRootState, mockDispatch, mountWithStore, waitForComponentToRender} from "../../../utils/test/testHelper";
@@ -7,12 +7,19 @@ import { LoadingStatus } from "../../../types/types";
 import IconButton from "../../../components/IconButton/IconButton";
 import ResetPassword from "../ResetPassword";
 
+const { mockUseParams } = vi.hoisted(() => ({ mockUseParams: vi.fn() }));
+
+vi.mock("react-router-dom", async (importOriginal) => ({
+    ...(await importOriginal<typeof import("react-router-dom")>()),
+    useParams: mockUseParams
+}));
+
 describe("ResetPassword", () => {
     const mockRootStore = createMockRootState(LoadingStatus.LOADED);
-    let mockDispatchFn: jest.Mock;
+    let mockDispatchFn: Mock;
 
     beforeEach(() => {
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ code: "test" });
+        mockUseParams.mockReturnValue({ code: "test" });
         mockDispatchFn = mockDispatch();
     });
 

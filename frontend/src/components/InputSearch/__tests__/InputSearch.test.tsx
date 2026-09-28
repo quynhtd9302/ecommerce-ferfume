@@ -5,7 +5,7 @@ import InputSearch from "../InputSearch";
 
 describe("InputSearch", () => {
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<InputSearch onSearch={jest.fn()} />);
+        const wrapper = mountWithStore(<InputSearch onSearch={vi.fn()} />);
         expect(wrapper.text().includes("Search")).toBe(true);
     });
 });
