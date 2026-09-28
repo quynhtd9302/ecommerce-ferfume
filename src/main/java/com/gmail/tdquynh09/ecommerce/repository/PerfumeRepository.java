@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -29,16 +30,34 @@ public interface PerfumeRepository extends JpaRepository<Perfume, Long> {
     @Query("SELECT perfume FROM Perfume perfume WHERE perfume.id IN :perfumesIds")
     List<PerfumeProjection> getPerfumesByIds(List<Long> perfumesIds);
 
+    // An empty (or null) list means "no filter" for that criteria
+    default Page<PerfumeProjection> findPerfumesByFilterParams(
+            List<String> perfumers,
+            List<String> genders,
+            Integer priceStart,
+            Integer priceEnd,
+            boolean sortByPrice,
+            Pageable pageable) {
+        boolean anyPerfumer = perfumers == null || perfumers.isEmpty();
+        boolean anyGender = genders == null || genders.isEmpty();
+        return findPerfumesByFilter(
+                anyPerfumer, anyPerfumer ? Collections.singletonList("") : perfumers,
+                anyGender, anyGender ? Collections.singletonList("") : genders,
+                priceStart, priceEnd, sortByPrice, pageable);
+    }
+
     @Query("SELECT perfume FROM Perfume perfume " +
-            "WHERE (coalesce(:perfumers, null) IS NULL OR perfume.perfumer IN :perfumers) " +
-            "AND (coalesce(:genders, null) IS NULL OR perfume.perfumeGender IN :genders) " +
-            "AND (coalesce(:priceStart, null) IS NULL OR perfume.price BETWEEN :priceStart AND :priceEnd) " +
+            "WHERE (:anyPerfumer = true OR perfume.perfumer IN :perfumers) " +
+            "AND (:anyGender = true OR perfume.perfumeGender IN :genders) " +
+            "AND (:priceStart IS NULL OR perfume.price BETWEEN :priceStart AND :priceEnd) " +
             "ORDER BY CASE WHEN :sortByPrice = true THEN perfume.price ELSE -perfume.price END ASC")
-    Page<PerfumeProjection> findPerfumesByFilterParams(
-            List<String> perfumers, 
-            List<String> genders, 
-            Integer priceStart, 
-            Integer priceEnd, 
+    Page<PerfumeProjection> findPerfumesByFilter(
+            boolean anyPerfumer,
+            List<String> perfumers,
+            boolean anyGender,
+            List<String> genders,
+            Integer priceStart,
+            Integer priceEnd,
             boolean sortByPrice,
             Pageable pageable);
 

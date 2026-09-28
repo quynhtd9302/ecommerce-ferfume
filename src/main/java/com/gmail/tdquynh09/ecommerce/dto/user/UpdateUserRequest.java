@@ -2,7 +2,7 @@ package com.gmail.tdquynh09.ecommerce.dto.user;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 import static com.gmail.tdquynh09.ecommerce.constants.ErrorMessage.EMPTY_FIRST_NAME;
 import static com.gmail.tdquynh09.ecommerce.constants.ErrorMessage.EMPTY_LAST_NAME;

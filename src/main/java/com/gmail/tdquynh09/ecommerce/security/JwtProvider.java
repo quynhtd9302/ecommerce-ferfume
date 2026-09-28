@@ -1,6 +1,9 @@
 package com.gmail.tdquynh09.ecommerce.security;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,9 +15,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 import static com.gmail.tdquynh09.ecommerce.constants.ErrorMessage.INVALID_JWT_TOKEN;
@@ -35,29 +41,31 @@ public class JwtProvider {
     @Value("${jwt.expiration}")
     private long validityInMilliseconds;
 
+    private SecretKey signingKey;
+
     @PostConstruct
     protected void init() {
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+        // HS256 needs a key of at least 256 bits: derive one from the configured secret
+        signingKey = Keys.hmacShaKeyFor(sha256(secretKey));
     }
 
     public String createToken(String username, String role) {
-        Claims claims = Jwts.claims().setSubject(username);
-        claims.put("role", role);
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds * 1000);
 
         return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .subject(username)
+                .claim("role", role)
+                .issuedAt(now)
+                .expiration(validity)
+                .signWith(signingKey, Jwts.SIG.HS256)
                 .compact();
     }
 
     public boolean validateToken(String token) {
         try {
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return !claimsJws.getBody().getExpiration().before(new Date());
+            Claims claims = parseClaims(token);
+            return !claims.getExpiration().before(new Date());
         } catch (JwtException | IllegalArgumentException exception) {
             throw new JwtAuthenticationException(INVALID_JWT_TOKEN, HttpStatus.UNAUTHORIZED);
         }
@@ -69,7 +77,19 @@ public class JwtProvider {
     }
 
     public String getUsername(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        return parseClaims(token).getSubject();
+    }
+
+    private Claims parseClaims(String token) {
+        return Jwts.parser().verifyWith(signingKey).build().parseSignedClaims(token).getPayload();
+    }
+
+    private static byte[] sha256(String value) {
+        try {
+            return MessageDigest.getInstance("SHA-256").digest(value.getBytes(StandardCharsets.UTF_8));
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     public String resolveToken(HttpServletRequest request) {

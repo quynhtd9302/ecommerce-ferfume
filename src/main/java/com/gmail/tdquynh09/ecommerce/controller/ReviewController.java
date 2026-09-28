@@ -9,7 +9,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 import static com.gmail.tdquynh09.ecommerce.constants.PathConstants.API_V1_REVIEW;

@@ -8,16 +8,14 @@ import com.gmail.tdquynh09.ecommerce.security.JwtProvider;
 import com.gmail.tdquynh09.ecommerce.security.oauth2.*;
 import com.gmail.tdquynh09.ecommerce.service.email.MailSender;
 import org.hamcrest.CoreMatchers;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,25 +29,24 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
 public class AuthenticationServiceImplTest {
 
     @Autowired
     private AuthenticationServiceImpl authenticationService;
 
-    @MockBean
+    @MockitoBean
     private AuthenticationManager authenticationManager;
 
-    @MockBean
+    @MockitoBean
     private UserRepository userRepository;
 
-    @MockBean
+    @MockitoBean
     private JwtProvider jwtProvider;
 
-    @MockBean
+    @MockitoBean
     private MailSender mailSender;
 
-    @MockBean
+    @MockitoBean
     private PasswordEncoder passwordEncoder;
 
     @Value("${app.frontend-host}")

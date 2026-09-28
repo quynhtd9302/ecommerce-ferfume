@@ -10,7 +10,7 @@ public class TestConstants {
 
     public static final String USER_PASSWORD_RESET_CODE = "3f9bcdb0-2241-4c34-803e-598b497d571f";
     public static final String USER_ACTIVATION_CODE = "8e97dc37-2cf5-47e2-98e0";
-    public static final String JWT_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2MjExODI4MTcsImV4cCI6MjIyNTk4MjgxN30.5GxJbuta48cVrn9EWYKrSQruk9jm06fpBu87JxTY_uk";
+    public static final String JWT_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2MjExODI4MTcsImV4cCI6MjIyNTk4MjgxN30.ZEzjSwZ--3eCigp3Ml0ww02wqq6bKPdTvgCuubiwGj0";
 
     public static final Integer USER2_ID = 126;
     public static final String USER2_EMAIL = "helloworld@test.com";

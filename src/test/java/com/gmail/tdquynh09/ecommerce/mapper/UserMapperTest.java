@@ -6,18 +6,15 @@ import com.gmail.tdquynh09.ecommerce.dto.RegistrationRequest;
 import com.gmail.tdquynh09.ecommerce.dto.review.ReviewRequest;
 import com.gmail.tdquynh09.ecommerce.dto.user.UpdateUserRequest;
 import com.gmail.tdquynh09.ecommerce.dto.user.UserResponse;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.gmail.tdquynh09.ecommerce.util.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
 public class UserMapperTest {
 
     @Autowired

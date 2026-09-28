@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -26,7 +26,8 @@ public class OrderItem {
     @Column(name = "quantity")
     private Long quantity;
 
-    @OneToOne
+    // Many order items (in different orders) can reference the same perfume
+    @ManyToOne
     private Perfume perfume;
 
     @Override

@@ -2,7 +2,7 @@ package com.gmail.tdquynh09.ecommerce.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 import static com.gmail.tdquynh09.ecommerce.constants.ErrorMessage.PASSWORD2_CHARACTER_LENGTH;
 import static com.gmail.tdquynh09.ecommerce.constants.ErrorMessage.PASSWORD_CHARACTER_LENGTH;

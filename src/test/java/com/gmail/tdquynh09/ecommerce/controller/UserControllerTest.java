@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.tdquynh09.ecommerce.dto.GraphQLRequest;
 import com.gmail.tdquynh09.ecommerce.dto.user.UpdateUserRequest;
 import com.gmail.tdquynh09.ecommerce.security.JwtAuthenticationException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -23,6 +21,7 @@ import static com.gmail.tdquynh09.ecommerce.constants.ErrorMessage.EMPTY_FIRST_N
 import static com.gmail.tdquynh09.ecommerce.constants.ErrorMessage.EMPTY_LAST_NAME;
 import static com.gmail.tdquynh09.ecommerce.constants.PathConstants.*;
 import static com.gmail.tdquynh09.ecommerce.util.TestConstants.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -30,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
 @Sql(value = {"/sql/create-user-before.sql", "/sql/create-perfumes-before.sql"},
@@ -68,12 +66,12 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.roles").value(ROLE_ADMIN));
     }
 
-    @Test(expected = JwtAuthenticationException.class)
-    public void getUserInfoByJwtExpired() throws Exception {
-        mockMvc.perform(get(API_V1_USERS)
+    @Test
+    public void getUserInfoByJwtExpired() {
+        assertThrows(JwtAuthenticationException.class, () -> mockMvc.perform(get(API_V1_USERS)
                         .header("Authorization", "jwt")
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isUnauthorized()));
     }
 
     @Test

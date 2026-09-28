@@ -1,10 +1,10 @@
 # ecommerce-ferfume
 
-Online perfume store: **Spring Boot 2.3 (Java)** backend + **React 17 / TypeScript** frontend.
+Online perfume store: **Spring Boot 3.5 (Java 17+)** backend + **React 17 / TypeScript** frontend.
 
 ## Requirements
 
-- JDK 8+ (tested with JDK 21)
+- JDK 17+ (tested with JDK 21)
 - Node.js 16+ (tested with Node 22)
 - PostgreSQL (or Docker)
 
