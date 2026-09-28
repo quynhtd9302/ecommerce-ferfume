@@ -1,0 +1,44 @@
+package com.gmail.tdquynh09.ecommerce.configuration;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.nio.file.Paths;
+
+@Configuration
+public class MvcConfiguration implements WebMvcConfigurer {
+
+    @Value("${app.frontend-host}")
+    private String hostname;
+
+    @Value("${upload.path}")
+    private String uploadPath;
+
+    @Bean
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
+        String uploadLocation = Paths.get(uploadPath).toAbsolutePath().normalize().toUri().toString();
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations(uploadLocation.endsWith("/") ? uploadLocation : uploadLocation + "/");
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/v1/**")
+                .allowedOrigins("http://" + hostname)
+                .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
+                .exposedHeaders("page-total-count", "page-total-elements")
+                .allowedHeaders("*");
+    }
+}

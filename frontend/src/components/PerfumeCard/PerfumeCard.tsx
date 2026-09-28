@@ -8,6 +8,7 @@ import { PerfumeResponse } from "../../types/types";
 import { ACCOUNT_ADMIN_PERFUMES, PRODUCT } from "../../constants/routeConstants";
 import { useCart } from "../../hooks/useCart";
 import "./PerfumeCard.css";
+import { getImageUrl } from "../../utils/image-url";
 
 type PropsType = {
     perfume: PerfumeResponse;
@@ -29,7 +30,7 @@ const PerfumeCard: FC<PropsType> = ({ perfume, colSpan, edit, onOpenDelete }): R
             <Link to={`${PRODUCT}/${perfume.id}`}>
                 <Card
                     className={"perfume-card"}
-                    cover={<img className={"perfume-card-image"} alt={perfume.perfumeTitle} src={perfume.filename} />}
+                    cover={<img className={"perfume-card-image"} alt={perfume.perfumeTitle} src={getImageUrl(perfume.filename)} />}
                     hoverable
                     actions={
                         edit

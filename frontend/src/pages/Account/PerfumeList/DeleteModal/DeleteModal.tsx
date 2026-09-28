@@ -3,6 +3,7 @@ import { Col, Modal, Row, Typography } from "antd";
 
 import { PerfumeResponse } from "../../../../types/types";
 import "./DeleteModal.css";
+import { getImageUrl } from "../../../../utils/image-url";
 
 type PropsType = {
     visible: boolean;
@@ -19,7 +20,7 @@ const DeleteModal: FC<PropsType> = ({ visible, deletePerfumeHandler, handleCance
                     <img
                         className={"delete-modal-perfume-image"}
                         alt={perfumeInfo?.perfumeTitle}
-                        src={perfumeInfo?.filename}
+                        src={getImageUrl(perfumeInfo?.filename)}
                     />
                 </Col>
                 <Col span={12}>

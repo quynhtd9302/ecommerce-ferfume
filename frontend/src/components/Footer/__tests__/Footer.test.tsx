@@ -7,7 +7,12 @@ describe("Footer", () => {
     it("should render correctly", () => {
         const wrapper = mountWithStore(<Footer />);
         expect(wrapper.text().includes("Perfume")).toBe(true);
-        expect(wrapper.text().includes("Social networks")).toBe(true);
+        expect(wrapper.text().includes(`© ${new Date().getFullYear()} Perfume`)).toBe(true);
         expect(wrapper.text().includes("from 08:00 to 20:00 without breaks and weekends")).toBe(true);
+    });
+
+    it("should hide social networks that are not configured", () => {
+        const wrapper = mountWithStore(<Footer />);
+        expect(wrapper.find("a[href='#']").exists()).toBe(false);
     });
 });

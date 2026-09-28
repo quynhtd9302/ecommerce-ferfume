@@ -20,6 +20,7 @@ import IconButton from "../../../components/IconButton/IconButton";
 import EditPerfumeSelect from "./EditPerfumeSelect";
 import { updatePerfume } from "../../../redux-toolkit/admin/admin-thunks";
 import "./EditPerfume.css";
+import { getImageUrl } from "../../../utils/image-url";
 
 type EditPerfumeData = {
     perfumeTitle: string;
@@ -52,13 +53,13 @@ const EditPerfume: FC = (): ReactElement => {
         return () => {
             dispatch(resetAdminState(LoadingStatus.LOADING));
         };
-    }, []);
+    }, [dispatch, params.id]);
     
     useEffect(() => {
         if (perfumeData) {
             form.setFieldsValue(perfumeData);
         }
-    }, [perfumeData])
+    }, [perfumeData, form])
 
     useEffect(() => {
         if (isPerfumeEdited) {
@@ -69,7 +70,7 @@ const EditPerfume: FC = (): ReactElement => {
             });
             dispatch(resetAdminState(LoadingStatus.SUCCESS));
         }
-    }, [isPerfumeEdited]);
+    }, [isPerfumeEdited, dispatch]);
 
     const onFormSubmit = (data: EditPerfumeData): void => {
         const bodyFormData: FormData = new FormData();
@@ -191,13 +192,13 @@ const EditPerfume: FC = (): ReactElement => {
                         />
                     </Col>
                     <Col span={12}>
-                        <Upload name={"file"} onChange={handleUpload} beforeUpload={() => false}>
+                        <Upload name={"file"} accept={"image/jpeg,image/png,image/gif,image/webp"} onChange={handleUpload} beforeUpload={() => false}>
                             <Button icon={<UploadOutlined />}>Click to Upload</Button>
                         </Upload>
                         <div className={"edit-perfume-image-wrapper"}>
                             <img
                                 className={"edit-perfume-image"}
-                                src={perfumeData.filename}
+                                src={getImageUrl(perfumeData.filename)}
                                 alt={perfumeData.perfumeTitle}
                             />
                         </div>

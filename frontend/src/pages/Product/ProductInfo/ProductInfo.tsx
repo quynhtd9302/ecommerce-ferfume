@@ -4,6 +4,7 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 
 import Description from "./Description/Description";
 import { FullPerfumeResponse } from "../../../types/types";
+import { getImageUrl } from "../../../utils/image-url";
 
 type PropsType = {
     perfume?: Partial<FullPerfumeResponse>;
@@ -15,7 +16,7 @@ const ProductInfo: FC<PropsType> = ({ perfume, reviewsLength, addToCart }): Reac
     return (
         <Row>
             <Col span={12} className={"product-image-wrapper"}>
-                <img src={perfume?.filename} alt={perfume?.perfumeTitle} className={"product-image"} />
+                <img src={getImageUrl(perfume?.filename)} alt={perfume?.perfumeTitle} className={"product-image"} />
             </Col>
             <Col span={12}>
                 <Row className={"product-header"}>

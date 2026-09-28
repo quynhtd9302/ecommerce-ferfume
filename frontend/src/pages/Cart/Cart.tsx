@@ -40,7 +40,9 @@ const Cart: FC = (): ReactElement => {
         return () => {
             dispatch(resetCartState());
         };
-    }, []);
+    // Intentionally not re-run when perfumeInCart changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch]);
 
     const deleteFromCart = (perfumeId: number): void => {
         perfumeInCart.delete(perfumeId);

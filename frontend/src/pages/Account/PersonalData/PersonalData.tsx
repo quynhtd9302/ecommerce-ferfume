@@ -11,7 +11,7 @@ import IconButton from "../../../components/IconButton/IconButton";
 import { updateUserInfo } from "../../../redux-toolkit/user/user-thunks";
 import { resetInputForm } from "../../../redux-toolkit/user/user-slice";
 
-interface PersonalData {
+interface PersonalDataForm {
     firstName: string;
     lastName: string;
     city: string;
@@ -38,9 +38,11 @@ const PersonalData: FC = (): ReactElement => {
         if (usersData) {
             form.setFieldsValue(usersData);
         }
-    }, []);
+    // Intentionally not re-run when usersData changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch, form]);
 
-    const onFormSubmit = (data: PersonalData): void => {
+    const onFormSubmit = (data: PersonalDataForm): void => {
         dispatch(updateUserInfo({ id: usersData?.id, ...data }));
     };
 
