@@ -1,0 +1,18 @@
+# Maven
+target/
+
+# Uploaded perfume images (local storage)
+uploads/
+
+# IDE
+.idea/workspace.xml
+.idea/shelf/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local env files
+.env.local

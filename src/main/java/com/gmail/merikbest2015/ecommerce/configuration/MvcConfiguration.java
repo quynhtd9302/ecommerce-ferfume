@@ -8,11 +8,16 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.nio.file.Paths;
+
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer {
 
     @Value("${hostname}")
     private String hostname;
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Bean
     public RestTemplate getRestTemplate() {
@@ -23,6 +28,9 @@ public class MvcConfiguration implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
+        String uploadLocation = Paths.get(uploadPath).toAbsolutePath().normalize().toUri().toString();
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations(uploadLocation.endsWith("/") ? uploadLocation : uploadLocation + "/");
     }
 
     @Override
@@ -30,8 +38,7 @@ public class MvcConfiguration implements WebMvcConfigurer {
         registry.addMapping("/api/v1/**")
                 .allowedOrigins("http://" + hostname)
                 .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
-                .exposedHeaders("page-total-count")
-                .exposedHeaders("page-total-elements")
+                .exposedHeaders("page-total-count", "page-total-elements")
                 .allowedHeaders("*");
     }
 }

@@ -50,6 +50,12 @@ public class EmailConfiguration {
         mailProperties.setProperty("mail.debug", debug);
         mailProperties.setProperty("mail.smtp.auth", auth);
         mailProperties.setProperty("mail.smtp.starttls.enable", enable);
+        mailProperties.setProperty("mail.smtp.connectiontimeout", "5000");
+        mailProperties.setProperty("mail.smtp.timeout", "5000");
+        mailProperties.setProperty("mail.smtp.writetimeout", "5000");
+        mailProperties.setProperty("mail.smtps.connectiontimeout", "5000");
+        mailProperties.setProperty("mail.smtps.timeout", "5000");
+        mailProperties.setProperty("mail.smtps.writetimeout", "5000");
         return mailSender;
     }
 

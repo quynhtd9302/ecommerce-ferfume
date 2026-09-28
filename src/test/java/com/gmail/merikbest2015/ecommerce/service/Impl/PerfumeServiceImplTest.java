@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,9 +27,11 @@ import java.util.List;
 import static com.gmail.merikbest2015.ecommerce.util.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
+@TestPropertySource("/application-test.properties")
 @RunWith(SpringRunner.class)
 public class PerfumeServiceImplTest {
 
@@ -137,10 +140,11 @@ public class PerfumeServiceImplTest {
         Perfume perfume = new Perfume();
         perfume.setId(1L);
         perfume.setPerfumer(PERFUMER_CHANEL);
-        perfume.setFilename(multipartFile.getOriginalFilename());
 
         when(perfumeRepository.save(perfume)).thenReturn(perfume);
-//        perfumeService.savePerfume(perfume, multipartFile);
+        Perfume saved = perfumeService.savePerfume(perfume, multipartFile);
+        assertTrue(saved.getFilename().contains("/img/"));
+        assertTrue(saved.getFilename().endsWith("Chanel_N5.jpg"));
         verify(perfumeRepository, times(1)).save(perfume);
     }
 }
