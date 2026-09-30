@@ -16,6 +16,7 @@ import { addOrder } from "../../redux-toolkit/order/order-thunks";
 import {resetCartState} from "../../redux-toolkit/cart/cart-slice";
 import {fetchCart} from "../../redux-toolkit/cart/cart-thunks";
 import OrderItem from "./OrderItem/OrderItem";
+import "./Order.css";
 
 interface OrderFormData {
     firstName: string;
@@ -70,7 +71,7 @@ const Order: FC = (): ReactElement => {
             </div>
             <Form onFinish={onFormSubmit} form={form}>
                 <Row gutter={32}>
-                    <Col span={12}>
+                    <Col span={12} className={"order-form-fields"}>
                         <FormInput
                             title={"Name:"}
                             titleSpan={5}
@@ -135,7 +136,7 @@ const Order: FC = (): ReactElement => {
                             placeholder={"example@gmail.com"}
                         />
                     </Col>
-                    <Col span={12}>
+                    <Col span={12} className={"order-summary"}>
                         <Row gutter={[32, 32]}>
                             {perfumes.map((perfume) => (
                                 <OrderItem
@@ -145,7 +146,7 @@ const Order: FC = (): ReactElement => {
                                 />
                             ))}
                         </Row>
-                        <Row gutter={[32, 32]} style={{ marginTop: 16 }}>
+                        <Row gutter={[32, 32]} className={"order-summary-total"} style={{ marginTop: 16 }}>
                             <Col span={12}>
                                 <Typography.Title level={3}>To pay : $ {totalPrice}.00</Typography.Title>
                             </Col>

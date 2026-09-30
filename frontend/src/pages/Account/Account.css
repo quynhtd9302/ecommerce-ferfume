@@ -1,0 +1,4 @@
+.account-sidebar {
+    border-right: 1px solid var(--line, #e3d9c8);
+    padding-right: 24px;
+}

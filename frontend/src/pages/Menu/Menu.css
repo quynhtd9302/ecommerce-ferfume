@@ -1,10 +1,20 @@
-.login-content {
-    background-color: #ffffff;
-    padding: 50px;
-    margin: 64px 400px;
-}
+/* .login-content is defined centrally in src/theme.css */
 
 .ant-checkbox-group-item {
     display: block;
     margin-right: 0;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+}
+
+.menu-filters .ant-typography {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.menu-results-bar {
+    align-items: center;
 }

@@ -1,0 +1,16 @@
+# Production overrides. Set SPRING_PROFILES_ACTIVE=prod (docker-compose.yml already does).
+# Secrets (DB_*, JWT_SECRET, MAIL_*, RECAPTCHA_SECRET, *_CLIENT_ID/SECRET) must come from environment variables
+# rather than the defaults below, which only make plain `docker compose up` work out of the box.
+spring:
+  # Default host "postgres" is the postgres service name on the docker-compose network.
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://postgres:5432/perfume}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:root}
+  jpa:
+    show-sql: false
+
+logging:
+  level:
+    root: warn
+    com.gmail.tdquynh09.ecommerce: info

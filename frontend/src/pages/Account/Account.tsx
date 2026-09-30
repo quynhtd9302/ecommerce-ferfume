@@ -32,6 +32,7 @@ import UsersList from "./UsersList/UsersList";
 import ManageUser from "./ManageUser/ManageUser";
 import ChangePassword from "./ChangePassword/ChangePassword";
 import PersonalOrdersList from "./PersonalOrdersList/PersonalOrdersList";
+import "./Account.css";
 
 const Account: FC = (): ReactElement => {
     const dispatch = useDispatch();
@@ -52,7 +53,7 @@ const Account: FC = (): ReactElement => {
     return (
         <ContentWrapper>
             <Row gutter={32}>
-                <Col span={5}>
+                <Col span={5} className={"account-sidebar"}>
                     <ContentTitle title={"My Account"} titleLevel={4} icon={<UserOutlined />} />
                     <AccountLink link={ACCOUNT_USER_INFO} title={"Personal data"} />
                     {isAdmin ? (

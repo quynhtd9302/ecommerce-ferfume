@@ -1,6 +1,10 @@
+.perfume-card {
+    background: var(--surface, #ffffff);
+}
+
 .perfume-card .ant-card-cover {
-    width: 80px;
-    height: 80px;
+    width: 96px;
+    height: 96px;
     text-align: center;
     margin: 0 auto;
 }
@@ -15,10 +19,25 @@
     justify-content: space-between;
 }
 
+.perfume-card .ant-card-meta-title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    white-space: normal;
+}
+
+.perfume-card .ant-card-meta-description {
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft, #5c5346);
+}
+
 .perfume-card-price {
     margin-top: 8px;
     display: flex;
     justify-content: center;
+    font-size: 15px;
+    font-weight: 600;
 }
 
 .perfume-card-price, .ant-rate-star:not(:last-child) {

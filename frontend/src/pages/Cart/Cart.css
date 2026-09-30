@@ -1,3 +1,8 @@
+.cart-item {
+    border-color: var(--line, #e3d9c8);
+    margin-bottom: 16px;
+}
+
 .cart-item .ant-card-body {
     padding: 24px 24px 24px 0;
 }
@@ -5,4 +10,14 @@
 .cart-item-image {
     display: flex;
     justify-content: center;
+}
+
+.cart-summary {
+    background: var(--surface-alt, #f2ead9);
+    border: 1px solid var(--line, #e3d9c8);
+    padding: 24px;
+}
+
+.cart-summary .ant-typography {
+    margin: 0 0 16px !important;
 }

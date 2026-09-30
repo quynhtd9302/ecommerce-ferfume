@@ -1,0 +1,28 @@
+.order-form-fields .form-item {
+    margin-bottom: 18px;
+}
+
+.order-summary {
+    background: var(--surface-alt, #f2ead9);
+    border: 1px solid var(--line, #e3d9c8);
+    padding: 24px;
+}
+
+.order-summary-total {
+    align-items: center;
+    flex-wrap: nowrap;
+    padding-top: 16px;
+    border-top: 1px solid var(--line, #e3d9c8);
+}
+
+.order-summary-total > .ant-col:first-child {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: none;
+}
+
+.order-summary-total .ant-typography {
+    margin: 0 !important;
+    font-size: 18px;
+    white-space: nowrap;
+}

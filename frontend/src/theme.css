@@ -1,0 +1,173 @@
+/* Maison Noir design system — shared tokens + antd overrides.
+   Loaded after antd/dist/antd.css in App.tsx so these rules win. */
+
+:root {
+    --bg: #FAF7F1;
+    --surface: #FFFFFF;
+    --surface-alt: #F2EAD9;
+    --ink: #161310;
+    --ink-soft: #5C5346;
+    --line: #E3D9C8;
+    --accent: #8B5E3C;
+}
+
+body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+h1, h2, h3, h4, h5,
+.ant-typography h1, .ant-typography h2, .ant-typography h3, .ant-typography h4, .ant-typography h5,
+.ant-typography.ant-typography-title {
+    font-family: "Fraunces", Georgia, serif !important;
+    font-weight: 600 !important;
+    color: var(--ink);
+}
+
+a {
+    color: var(--ink);
+}
+
+a:hover {
+    color: var(--accent);
+}
+
+/* Layout: antd defaults to a grey page background; let the theme background show through */
+.ant-layout {
+    background: transparent;
+}
+
+/* Buttons */
+.ant-btn {
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+}
+
+.ant-btn-primary {
+    background: var(--ink);
+    border-color: var(--ink);
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.ant-btn:not(.ant-btn-primary):not(.ant-btn-dangerous):hover,
+.ant-btn:not(.ant-btn-primary):not(.ant-btn-dangerous):focus {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* Cards */
+.ant-card {
+    border-color: var(--line);
+    border-radius: 2px;
+}
+
+.ant-card-hoverable:hover {
+    box-shadow: 0 6px 20px rgba(22, 19, 16, 0.08);
+}
+
+/* Rating stars in the accent color instead of antd's default gold */
+.ant-rate-star-full .ant-rate-star-first,
+.ant-rate-star-full .ant-rate-star-second,
+.ant-rate-star-half .ant-rate-star-first {
+    color: var(--accent);
+}
+
+/* Inputs, selects */
+.ant-input,
+.ant-input-number,
+.ant-input-affix-wrapper,
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border-color: var(--line);
+    border-radius: 2px;
+}
+
+.ant-input:hover,
+.ant-input-number:hover,
+.ant-input-affix-wrapper:hover,
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+    border-color: var(--accent) !important;
+}
+
+.ant-input:focus,
+.ant-input-number-focused,
+.ant-input-affix-wrapper-focused,
+.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 2px rgba(139, 94, 60, 0.15) !important;
+}
+
+/* Checkboxes / radios */
+.ant-checkbox-checked .ant-checkbox-inner,
+.ant-radio-checked .ant-radio-inner {
+    background-color: var(--ink);
+    border-color: var(--ink);
+}
+
+.ant-checkbox:hover .ant-checkbox-inner,
+.ant-radio:hover .ant-radio-inner {
+    border-color: var(--accent);
+}
+
+/* Tables (Orders, Users) */
+.ant-table {
+    border-color: var(--line);
+}
+
+.ant-table-thead > tr > th {
+    background: var(--surface-alt);
+    color: var(--ink-soft);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-bottom-color: var(--line);
+}
+
+.ant-table-tbody > tr > td {
+    border-bottom-color: var(--line);
+}
+
+.ant-table-tbody > tr:hover > td {
+    background: var(--surface-alt);
+}
+
+/* Pagination */
+.ant-pagination-item-active,
+.ant-pagination-item-active:hover {
+    border-color: var(--ink);
+}
+
+.ant-pagination-item-active a {
+    color: var(--ink);
+}
+
+/* Dividers */
+.ant-divider {
+    border-top-color: var(--line);
+}
+
+/* Shared page container: a centered, max-width content area used across the site
+   (replaces the old fixed 400px side margins, which broke below ~1200px wide) */
+.login-content {
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    padding: 48px;
+    width: 100%;
+    max-width: 1320px;
+    margin: 48px auto;
+    min-height: 550px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+    .login-content {
+        margin: 24px 16px;
+        padding: 28px 20px;
+    }
+}

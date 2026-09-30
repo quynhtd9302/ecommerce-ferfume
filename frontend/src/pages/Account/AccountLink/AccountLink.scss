@@ -1,21 +1,22 @@
 .account-sidebar-link {
-  margin: 10px 0 10px 0;
-  padding: 0;
-  color: black;
+  margin: 0 0 4px 0;
+  padding: 10px 12px !important;
+  color: var(--ink, #161310);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  border-left: 2px solid transparent;
+  transition: .2s;
 
-  a {
-    font-weight: bold;
-    color: black;
-    transition: .3s;
-  }
-
-  a:hover {
-    color: #00A1DF;
+  &:hover {
+    color: var(--accent, #8b5e3c);
+    background: var(--surface-alt, #f2ead9);
     text-decoration: none;
   }
 }
 
 .is-active {
-  color: #00A1DF;
+  color: var(--ink, #161310) !important;
+  background: var(--surface-alt, #f2ead9);
+  border-left-color: var(--accent, #8b5e3c);
   text-decoration: none;
 }

@@ -1,0 +1,14 @@
+# Local development overrides (active by default, see application.yml).
+spring:
+  # DB "perfume" on your machine or `docker compose up -d postgres` (see README).
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/perfume}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:root}
+  jpa:
+    show-sql: true
+
+logging:
+  level:
+    com.gmail.tdquynh09.ecommerce.controller: debug
+    org.hibernate.SQL: debug

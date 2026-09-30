@@ -14,16 +14,16 @@ type PropsType = {
 
 const ProductInfo: FC<PropsType> = ({ perfume, reviewsLength, addToCart }): ReactElement => {
     return (
-        <Row>
+        <Row className={"product-info"}>
             <Col span={12} className={"product-image-wrapper"}>
                 <img src={getImageUrl(perfume?.filename)} alt={perfume?.perfumeTitle} className={"product-image"} />
             </Col>
             <Col span={12}>
                 <Row className={"product-header"}>
                     <Col>
+                        <Typography.Text className={"product-eyebrow"}>{perfume?.perfumer}</Typography.Text>
                         <Typography.Title level={3}>{perfume?.perfumeTitle}</Typography.Title>
-                        <Typography.Title level={4}>{perfume?.perfumer}</Typography.Title>
-                        <Typography.Text>{perfume?.type}</Typography.Text>
+                        <Typography.Text className={"product-subtitle"}>{perfume?.type}</Typography.Text>
                     </Col>
                 </Row>
                 <Row>
@@ -35,14 +35,14 @@ const ProductInfo: FC<PropsType> = ({ perfume, reviewsLength, addToCart }): Reac
                 <Row>
                     <Typography.Text type="success">In Stock</Typography.Text>
                 </Row>
-                <Row style={{ marginTop: 16 }}>
+                <Row className={"product-price-row"} style={{ marginTop: 16 }}>
                     <Col span={5}>
                         <Space align={"baseline"}>
-                            <Typography.Text>${perfume?.price}.00</Typography.Text>
+                            <Typography.Text className={"product-price"}>${perfume?.price}.00</Typography.Text>
                         </Space>
                     </Col>
                     <Col span={4}>
-                        <Button icon={<ShoppingCartOutlined />} onClick={addToCart}>
+                        <Button type={"primary"} icon={<ShoppingCartOutlined />} onClick={addToCart}>
                             Add to cart
                         </Button>
                     </Col>

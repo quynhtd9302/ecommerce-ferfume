@@ -97,18 +97,14 @@ const Cart: FC = (): ReactElement => {
                                     ))}
                                 </Col>
                                 <Col span={8}>
-                                    <Row>
-                                        <Col span={12}>
-                                            <CartTotalPrice />
-                                        </Col>
-                                        <Col span={12}>
-                                            <Link to={ORDER}>
-                                                <Button type="primary" icon={<ShoppingOutlined />} size="large">
-                                                    Checkout
-                                                </Button>
-                                            </Link>
-                                        </Col>
-                                    </Row>
+                                    <div className={"cart-summary"}>
+                                        <CartTotalPrice />
+                                        <Link to={ORDER}>
+                                            <Button type="primary" icon={<ShoppingOutlined />} size="large" block>
+                                                Checkout
+                                            </Button>
+                                        </Link>
+                                    </div>
                                 </Col>
                             </>
                         )}

@@ -1,0 +1,58 @@
+# Test profile, activated via @ActiveProfiles("test") on the test classes.
+# Merges on top of src/main/resources/application.yml (multipart, jwt header, ... stay shared).
+spring:
+  datasource:
+    url: ${TEST_DB_URL:jdbc:postgresql://localhost:5432/perfumetest}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:root}
+  jpa:
+    generate-ddl: false
+    show-sql: false
+    hibernate:
+      ddl-auto: create
+  flyway:
+    enabled: false
+  mail:
+    host: smtp.gmail.com
+    username: webstore.perfume@gmail.com
+    password: ""
+    port: 465
+    protocol: smtps
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: test
+            client-secret: test
+          github:
+            client-id: test
+            client-secret: test
+
+mail:
+  debug: false
+
+upload:
+  path: target/test-uploads
+
+recaptcha:
+  secret: ""
+  url: https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s
+
+app:
+  frontend-host: localhost:3000
+
+jwt:
+  header: Authorization
+  secret: dejavu
+  expiration: 604800
+
+logging:
+  level:
+    com.gmail.tdquynh09.ecommerce.controller: debug

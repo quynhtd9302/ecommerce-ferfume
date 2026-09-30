@@ -1,14 +1,20 @@
 .navbar-logo-wrapper {
   display: flex;
   justify-content: center;
-  padding: 50px;
-  background-color: #000000;
+  padding: 28px;
+  background-color: var(--ink, #161310);
+
+  img {
+    max-height: 64px;
+  }
 }
 
 .navbar-wrapper {
-  background-color: #000000;
+  background-color: var(--surface, #ffffff);
+  border-bottom: 1px solid var(--line, #e3d9c8);
+
   a {
-    color: white;
+    color: var(--ink, #161310);
     transition: .3s;
     svg {
       margin-right: 5px;
@@ -16,7 +22,7 @@
     }
   }
   a:hover {
-    color: #00A1DF;
+    color: var(--accent, #8b5e3c);
     text-decoration: none;
   }
   ul {
@@ -28,8 +34,16 @@
       display: inline-block;
       text-align: center;
       font-weight: 700;
+      font-size: 12.5px;
+      letter-spacing: 0.08em;
     }
   }
+}
+
+.navbar-row {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
 .navbar-cart {
@@ -37,5 +51,13 @@
   padding: 0 !important;
   svg {
     font-size: 24px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .navbar-wrapper ul li {
+    width: auto;
+    padding: 10px 8px;
+    margin-right: 0;
   }
 }

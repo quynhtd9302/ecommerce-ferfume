@@ -4,6 +4,9 @@ target/
 # Uploaded perfume images (local storage)
 uploads/
 
+# PostgreSQL data (docker-compose bind mount)
+pgdata/
+
 # IDE
 .idea/workspace.xml
 .idea/shelf/

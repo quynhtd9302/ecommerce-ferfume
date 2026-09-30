@@ -1,6 +1,2 @@
-.login-content {
-    background-color: #ffffff;
-    padding: 50px;
-    margin: 64px 400px;
-    min-height: 550px;
-}
+/* .login-content is defined centrally in src/theme.css so every page that uses
+   ContentWrapper shares one definition. */

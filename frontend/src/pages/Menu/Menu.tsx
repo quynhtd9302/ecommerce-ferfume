@@ -129,7 +129,7 @@ const Menu: FC = (): ReactElement => {
             <Layout.Content className={"login-content"}>
                 <Typography.Title level={2}>Perfumes</Typography.Title>
                 <Row gutter={32}>
-                    <Col span={6}>
+                    <Col span={6} className={"menu-filters"}>
                         <MenuCheckboxSection
                             title={"Brand"}
                             onChange={onChangeCheckbox}
@@ -155,7 +155,7 @@ const Menu: FC = (): ReactElement => {
                                 <InputSearch onSearch={onSearch} form={form} />
                             </Col>
                         </Row>
-                        <Row style={{ marginTop: 16, marginBottom: 16 }}>
+                        <Row className={"menu-results-bar"} style={{ marginTop: 16, marginBottom: 16 }}>
                             <Col span={16}>
                                 <Pagination
                                     current={currentPage}

@@ -1,0 +1,86 @@
+# Settings shared by every environment. Environment-specific overrides live in
+# application-dev.yml / application-prod.yml (selected by SPRING_PROFILES_ACTIVE, "dev" by default).
+spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+  # ===== Database (host/credentials are set per-profile, see application-dev.yml / application-prod.yml) =====
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  # ===== File upload =====
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+  # ===== Mail =====
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    port: ${MAIL_PORT:465}
+    protocol: smtps
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  # ===== OAuth2 (set real client ids/secrets via environment variables) =====
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:changeme}
+            client-secret: ${GOOGLE_CLIENT_SECRET:changeme}
+            scope: email,profile
+          facebook:
+            client-id: ${FACEBOOK_CLIENT_ID:changeme}
+            client-secret: ${FACEBOOK_CLIENT_SECRET:changeme}
+            scope: email,public_profile
+          github:
+            client-id: ${GITHUB_CLIENT_ID:changeme}
+            client-secret: ${GITHUB_CLIENT_SECRET:changeme}
+            scope: user:email,read:user
+        provider:
+          facebook:
+            authorization-uri: https://www.facebook.com/v10.0/dialog/oauth
+            user-info-uri: https://graph.facebook.com/v10.0/me?fields=email,first_name,last_name,name
+
+# Local folder where uploaded perfume images are stored (served at /img/**)
+upload:
+  path: ${UPLOAD_PATH:uploads}
+
+mail:
+  debug: false
+
+# leave RECAPTCHA_SECRET empty to skip verification in development
+recaptcha:
+  secret: ${RECAPTCHA_SECRET:}
+  url: https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s
+
+# Frontend host (CORS + links in emails / OAuth2 redirect).
+# Not named "hostname": the HOSTNAME environment variable (set by Docker) would override it.
+app:
+  frontend-host: ${FRONTEND_HOST:localhost:3000}
+
+# ===== JWT =====
+jwt:
+  header: Authorization
+  secret: ${JWT_SECRET:change-this-secret-in-production}
+  # token lifetime in seconds (7 days)
+  expiration: 604800
+
+logging:
+  level:
+    com.gmail.tdquynh09.ecommerce.controller: debug

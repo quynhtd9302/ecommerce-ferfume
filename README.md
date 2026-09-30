@@ -4,8 +4,8 @@ Online perfume store: **Spring Boot 2.3 (Java)** backend + **React 17 / TypeScri
 
 ## Requirements
 
-- JDK 8+ (tested with JDK 21)
-- Node.js 16+ (tested with Node 22)
+- JDK 21 (built and run with Temurin 21 in `Dockerfile`/CI; `pom.xml` targets bytecode 1.8)
+- Node.js 22 (pinned in `frontend/.nvmrc`, `frontend/Dockerfile` and CI; also verified working on Node 20)
 - PostgreSQL (or Docker)
 
 ## Run everything with Docker
@@ -39,7 +39,8 @@ automatically by Flyway on first start (`src/main/resources/db/migration`).
 ./mvnw spring-boot:run          # Windows: mvnw.cmd spring-boot:run
 ```
 
-Swagger UI: http://localhost:8080/swagger-ui.html
+Runs with the `dev` Spring profile by default (see [Configuration](#configuration)). Swagger UI:
+http://localhost:8080/swagger-ui.html
 
 ### 3. Frontend (http://localhost:3000)
 
@@ -57,11 +58,22 @@ npm start
 
 ## Configuration
 
-All settings live in `src/main/resources/application.properties` and can be overridden with environment variables:
+Backend settings are split by Spring profile under `src/main/resources/`:
 
-| Variable | Default | Description |
+| File | Purpose |
+|---|---|
+| `application.yml` | Settings shared by every environment (file upload, mail, OAuth2, JWT, reCAPTCHA, ...) plus `spring.profiles.active` (defaults to `dev`) |
+| `application-dev.yml` | Local development: DB defaults to `localhost:5432/perfume`, `show-sql: true`, verbose logging |
+| `application-prod.yml` | Production: DB defaults to `postgres:5432/perfume` (the `postgres` service on the docker-compose network), `show-sql: false`, quieter logging |
+| `src/test/resources/application-test.yml` | Used by `@ActiveProfiles("test")` tests: DB `perfumetest`, Flyway disabled, `ddl-auto: create` |
+
+Select the profile with `SPRING_PROFILES_ACTIVE` (`docker-compose.yml` sets it to `prod` for the `backend` service;
+`./mvnw spring-boot:run` uses the `dev` default). Every value below can still be overridden with an environment
+variable regardless of profile:
+
+| Variable | Default (dev / prod) | Description |
 |---|---|---|
-| `DB_URL` | `jdbc:postgresql://localhost:5432/perfume` | JDBC URL |
+| `DB_URL` | `jdbc:postgresql://localhost:5432/perfume` / `jdbc:postgresql://postgres:5432/perfume` | JDBC URL |
 | `DB_USERNAME` / `DB_PASSWORD` | `postgres` / `root` | DB credentials |
 | `JWT_SECRET` | `change-this-secret-in-production` | JWT signing key — **change in production** |
 | `FRONTEND_HOST` | `localhost:3000` | Frontend host (CORS, e-mail links, OAuth2 redirect) |
