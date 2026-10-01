@@ -1,4 +1,5 @@
 import React, { FC, memo, ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 import { CloseOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 
@@ -8,10 +9,11 @@ type PropsType = {
 };
 
 const RemoveButton: FC<PropsType> = memo(({ perfumeId, deleteFromCart }): ReactElement => {
+    const { t } = useTranslation();
 
     return (
         <Button onClick={() => deleteFromCart(perfumeId)} icon={<CloseOutlined />}>
-            Remove
+            {t("common.remove")}
         </Button>
     );
 });

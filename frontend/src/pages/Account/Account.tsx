@@ -1,11 +1,12 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
+import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Col, Row } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 import ContentWrapper from "../../components/ContentWrapper/ContentWrapper";
-import { selectUserFromUserState } from "../../redux-toolkit/user/user-selector";
+import { selectIsUserLoading, selectUserFromUserState } from "../../redux-toolkit/user/user-selector";
 import { resetAuthState } from "../../redux-toolkit/auth/auth-slice";
 import { fetchUserInfo } from "../../redux-toolkit/user/user-thunks";
 import { UserRoles } from "../../types/types";
@@ -36,41 +37,37 @@ import "./Account.css";
 
 const Account: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const usersData = useSelector(selectUserFromUserState);
-    const [isAdmin, setIsAdmin] = useState<boolean>(false);
+    const isUserLoading = useSelector(selectIsUserLoading);
+    const isAdmin = usersData?.roles?.[0] === UserRoles.ADMIN;
 
     useEffect(() => {
         dispatch(resetAuthState());
         dispatch(fetchUserInfo());
     }, [dispatch]);
 
-    useEffect(() => {
-        if (usersData) {
-            setIsAdmin(usersData.roles![0] === UserRoles.ADMIN);
-        }
-    }, [usersData]);
-
     return (
         <ContentWrapper>
-            <Row gutter={32}>
-                <Col span={5} className={"account-sidebar"}>
-                    <ContentTitle title={"My Account"} titleLevel={4} icon={<UserOutlined />} />
-                    <AccountLink link={ACCOUNT_USER_INFO} title={"Personal data"} />
+            <Row gutter={[32, 24]}>
+                <Col xs={24} md={5} className={"account-sidebar"}>
+                    <ContentTitle title={t("account.myAccount")} titleLevel={4} icon={<UserOutlined />} />
+                    <AccountLink link={ACCOUNT_USER_INFO} title={t("account.personalData")} />
                     {isAdmin ? (
                         <>
-                            <AccountLink link={ACCOUNT_ADMIN_ADD} title={"Add perfume"} />
-                            <AccountLink link={ACCOUNT_ADMIN_PERFUMES} title={"List of perfumes"} />
-                            <AccountLink link={ACCOUNT_ADMIN_ORDERS} title={"List of all orders"} />
-                            <AccountLink link={ACCOUNT_ADMIN_USERS} title={"List of all users"} />
+                            <AccountLink link={ACCOUNT_ADMIN_ADD} title={t("account.addPerfume")} />
+                            <AccountLink link={ACCOUNT_ADMIN_PERFUMES} title={t("account.listOfPerfumes")} />
+                            <AccountLink link={ACCOUNT_ADMIN_ORDERS} title={t("account.listOfAllOrders")} />
+                            <AccountLink link={ACCOUNT_ADMIN_USERS} title={t("account.listOfAllUsers")} />
                         </>
                     ) : (
                         <>
-                            <AccountLink link={ACCOUNT_USER_EDIT} title={"Change password"} />
-                            <AccountLink link={ACCOUNT_USER_ORDERS} title={"List of orders"} />
+                            <AccountLink link={ACCOUNT_USER_EDIT} title={t("account.changePassword")} />
+                            <AccountLink link={ACCOUNT_USER_ORDERS} title={t("account.listOfOrders")} />
                         </>
                     )}
                 </Col>
-                <Col span={19}>
+                <Col xs={24} md={19}>
                     <Route exact path={ACCOUNT} component={AccountItem} />
                     <Route path={ACCOUNT_USER_INFO} component={PersonalData} />
                     <Route path={ACCOUNT_USER_EDIT} component={ChangePassword} />
@@ -86,7 +83,7 @@ const Account: FC = (): ReactElement => {
                             <Route exact path={`${ACCOUNT_ADMIN_USERS}/:id`} component={ManageUser} />
                         </>
                     ) : (
-                        <Redirect to={ACCOUNT} />
+                        !isUserLoading && <Redirect to={ACCOUNT} />
                     )}
                 </Col>
             </Row>

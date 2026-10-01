@@ -1,5 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { LoginOutlined, LogoutOutlined, ShoppingCartOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { Affix, Badge, Col, Row, Space } from "antd";
@@ -9,10 +10,14 @@ import { selectCartItemsCount } from "../../redux-toolkit/cart/cart-selector";
 import { logoutSuccess } from "../../redux-toolkit/user/user-slice";
 import { ACCOUNT, BASE, CONTACTS, LOGIN, MENU, REGISTRATION } from "../../constants/routeConstants";
 import { CART } from "../../constants/urlConstants";
+import { SHOP_NAME } from "../../constants/shopInfo";
+import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
+import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
 import "./NavBar.scss";
 
 const NavBar: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const usersData = useSelector(selectUserFromUserState);
     const cartItemsCount = useSelector(selectCartItemsCount);
 
@@ -23,29 +28,39 @@ const NavBar: FC = (): ReactElement => {
 
     return (
         <>
+            <div className={"navbar-announcement"}>
+                <span>{t("nav.announcement")}</span>
+                <div className={"navbar-announcement-controls"}>
+                    <ThemeSwitcher />
+                    <LanguageSwitcher />
+                </div>
+            </div>
             <div className={"navbar-logo-wrapper"}>
-                <img alt={"navbar-logo"} src="https://i.ibb.co/fqYvrL8/LOGO4.jpg" />
+                <Link to={BASE} className={"navbar-logo"}>
+                    <span className={"navbar-logo-name"}>{SHOP_NAME}</span>
+                    <span className={"navbar-logo-tagline"}>{t("nav.tagline")}</span>
+                </Link>
             </div>
             <Affix>
                 <div className={"navbar-wrapper"}>
                     <Row className={"navbar-row"}>
-                        <Col span={12}>
+                        <Col xs={24} md={12}>
                             <ul>
                                 <Link to={BASE}>
-                                    <li>HOME</li>
+                                    <li>{t("nav.home")}</li>
                                 </Link>
                                 <li>
-                                    <Link to={{ pathname: MENU, state: { id: "all" } }}>PERFUMES</Link>
+                                    <Link to={{ pathname: MENU, state: { id: "all" } }}>{t("nav.perfumes")}</Link>
                                 </li>
                                 <Link to={CONTACTS}>
-                                    <li>CONTACTS</li>
+                                    <li>{t("nav.contacts")}</li>
                                 </Link>
                             </ul>
                         </Col>
-                        <Col span={12}>
+                        <Col xs={24} md={12}>
                             <ul>
                                 <li className={"navbar-cart"}>
-                                    <Badge count={cartItemsCount} size="small" color={"green"}>
+                                    <Badge count={cartItemsCount} size="small" color={"#8B5E3C"}>
                                         <Link to={CART}>
                                             <ShoppingCartOutlined />
                                         </Link>
@@ -56,13 +71,13 @@ const NavBar: FC = (): ReactElement => {
                                         <Link to={ACCOUNT}>
                                             <li>
                                                 <UserOutlined />
-                                                MY ACCOUNT
+                                                {t("nav.myAccount")}
                                             </li>
                                         </Link>
                                         <Link id={"handleLogout"} to={BASE} onClick={handleLogout}>
                                             <li>
                                                 <LogoutOutlined />
-                                                EXIT
+                                                {t("nav.exit")}
                                             </li>
                                         </Link>
                                     </>
@@ -72,14 +87,14 @@ const NavBar: FC = (): ReactElement => {
                                             <li>
                                                 <Space align={"baseline"}>
                                                     <LoginOutlined />
-                                                    SIGN IN
+                                                    {t("nav.signIn")}
                                                 </Space>
                                             </li>
                                         </Link>
                                         <Link to={REGISTRATION}>
                                             <li>
                                                 <UserAddOutlined />
-                                                SIGN UP
+                                                {t("nav.signUp")}
                                             </li>
                                         </Link>
                                     </>

@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { Button, Col, Form, notification, Row, Upload } from "antd";
 import { PlusSquareFilled, PlusSquareOutlined, UploadOutlined } from "@ant-design/icons";
 import { UploadChangeParam } from "antd/lib/upload/interface";
@@ -33,6 +34,7 @@ type AddPerfumeData = {
 
 const AddPerfume: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const isPerfumeAdded = useSelector(selectIsPerfumeAdded);
     const ispPerfumeLoading = useSelector(selectIsAdminStateLoading);
     const perfumeErrors = useSelector(selectAdminStateErrors);
@@ -50,8 +52,8 @@ const AddPerfume: FC = (): ReactElement => {
         if (isPerfumeAdded) {
             window.scrollTo(0, 0);
             notification.success({
-                message: "Perfume added",
-                description: "Perfume successfully added!"
+                message: t("form.perfumeAdded"),
+                description: t("form.perfumeAddedDescription")
             });
             dispatch(resetAdminState(LoadingStatus.SUCCESS));
         }
@@ -75,26 +77,26 @@ const AddPerfume: FC = (): ReactElement => {
 
     return (
         <>
-            <ContentTitle title={"Add perfume"} titleLevel={4} icon={<PlusSquareOutlined />} />
+            <ContentTitle title={t("account.addPerfume")} titleLevel={4} icon={<PlusSquareOutlined />} />
             <Form onFinish={onFormSubmit}>
-                <Row gutter={32}>
-                    <Col span={12}>
+                <Row gutter={[32, 16]}>
+                    <Col xs={24} md={12}>
                         <AddFormInput
-                            title={"Perfume title"}
+                            title={t("form.perfumeTitle")}
                             name={"perfumeTitle"}
                             error={perfumeErrors.perfumeTitleError}
-                            placeholder={"Enter the perfume title"}
+                            placeholder={t("form.perfumeTitlePlaceholder")}
                             disabled={ispPerfumeLoading}
                         />
                         <AddFormInput
-                            title={"Release year"}
+                            title={t("form.releaseYear")}
                             name={"year"}
                             error={perfumeErrors.yearError}
-                            placeholder={"Enter the release year"}
+                            placeholder={t("form.releaseYearPlaceholder")}
                             disabled={ispPerfumeLoading}
                         />
                         <AddFormSelect
-                            title={"Perfume type"}
+                            title={t("form.perfumeType")}
                             name={"type"}
                             error={perfumeErrors.typeError}
                             placeholder={"Eau de Parfum"}
@@ -102,7 +104,7 @@ const AddPerfume: FC = (): ReactElement => {
                             values={["Eau de Parfum", "Eau de Toilette"]}
                         />
                         <AddFormSelect
-                            title={"Gender"}
+                            title={t("form.gender")}
                             name={"perfumeGender"}
                             error={perfumeErrors.perfumeGenderError}
                             placeholder={"male"}
@@ -110,64 +112,64 @@ const AddPerfume: FC = (): ReactElement => {
                             values={["male", "female"]}
                         />
                         <AddFormInput
-                            title={"Heart notes"}
+                            title={t("form.heartNotes")}
                             name={"fragranceMiddleNotes"}
                             error={perfumeErrors.fragranceMiddleNotesError}
-                            placeholder={"Enter the heart notes"}
+                            placeholder={t("form.heartNotesPlaceholder")}
                             disabled={ispPerfumeLoading}
                         />
                         <AddFormInput
-                            title={"Price"}
+                            title={t("form.price")}
                             name={"price"}
                             error={perfumeErrors.priceError}
-                            placeholder={"Enter the price"}
+                            placeholder={t("form.pricePlaceholder")}
                             disabled={ispPerfumeLoading}
                         />
                     </Col>
-                    <Col span={12}>
+                    <Col xs={24} md={12}>
                         <AddFormInput
-                            title={"Brand"}
+                            title={t("form.brand")}
                             name={"perfumer"}
                             error={perfumeErrors.perfumerError}
-                            placeholder={"Enter the brand"}
+                            placeholder={t("form.brandPlaceholder")}
                             disabled={ispPerfumeLoading}
                         />
                         <AddFormInput
-                            title={"Manufacturer country"}
+                            title={t("form.manufacturerCountry")}
                             name={"country"}
                             error={perfumeErrors.countryError}
-                            placeholder={"Enter the manufacturer country"}
+                            placeholder={t("form.manufacturerCountryPlaceholder")}
                             disabled={ispPerfumeLoading}
                         />
                         <AddFormInput
-                            title={"Volume"}
+                            title={t("form.volume")}
                             name={"volume"}
                             error={perfumeErrors.volumeError}
-                            placeholder={"Enter the volume"}
+                            placeholder={t("form.volumePlaceholder")}
                             disabled={ispPerfumeLoading}
                         />
                         <AddFormInput
-                            title={"Top notes"}
+                            title={t("form.topNotes")}
                             name={"fragranceTopNotes"}
                             error={perfumeErrors.fragranceTopNotesError}
-                            placeholder={"Enter the top notes"}
+                            placeholder={t("form.topNotesPlaceholder")}
                             disabled={ispPerfumeLoading}
                         />
                         <AddFormInput
-                            title={"Base notes"}
+                            title={t("form.baseNotes")}
                             name={"fragranceBaseNotes"}
                             error={perfumeErrors.fragranceBaseNotesError}
-                            placeholder={"Enter the base notes"}
+                            placeholder={t("form.baseNotesPlaceholder")}
                             disabled={ispPerfumeLoading}
                         />
                         <Upload name={"file"} accept={"image/jpeg,image/png,image/gif,image/webp"} onChange={handleUpload} beforeUpload={() => false}>
                             <Button icon={<UploadOutlined />} style={{ marginTop: 22 }}>
-                                Click to Upload
+                                {t("form.clickToUpload")}
                             </Button>
                         </Upload>
                     </Col>
                 </Row>
-                <IconButton title={"Add"} icon={<PlusSquareFilled />} />
+                <IconButton title={t("form.add")} icon={<PlusSquareFilled />} />
             </Form>
         </>
     );

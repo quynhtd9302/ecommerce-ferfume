@@ -1,8 +1,14 @@
 import React, { FC, ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 import { Checkbox, Row, Typography } from "antd";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 
 import { CheckboxCategoryFilter } from "../Menu";
+
+const genderLabelKeys: Record<string, string> = {
+    male: "menu.male",
+    female: "menu.female"
+};
 
 type PropsType = {
     title: string;
@@ -13,6 +19,8 @@ type PropsType = {
 };
 
 const MenuCheckboxSection: FC<PropsType> = ({ title, onChange, category, data, selectedValues }): ReactElement => {
+    const { t } = useTranslation();
+
     return (
         <div>
             <Typography.Title level={5} style={{ marginTop: 8 }}>
@@ -29,7 +37,9 @@ const MenuCheckboxSection: FC<PropsType> = ({ title, onChange, category, data, s
             >
                 {data.map((value, index) => (
                     <Row key={index}>
-                        <Checkbox value={value.name}>{value.name}</Checkbox>
+                        <Checkbox value={value.name}>
+                            {genderLabelKeys[value.name] ? t(genderLabelKeys[value.name]) : value.name}
+                        </Checkbox>
                     </Row>
                 ))}
             </Checkbox.Group>

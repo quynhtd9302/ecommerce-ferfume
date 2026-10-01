@@ -1,6 +1,7 @@
 import React, {FC, ReactElement, useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { CheckCircleOutlined, ShoppingOutlined } from "@ant-design/icons";
 import { Button, Col, Form, Row, Typography } from "antd";
 
@@ -16,6 +17,7 @@ import { addOrder } from "../../redux-toolkit/order/order-thunks";
 import {resetCartState} from "../../redux-toolkit/cart/cart-slice";
 import {fetchCart} from "../../redux-toolkit/cart/cart-thunks";
 import OrderItem from "./OrderItem/OrderItem";
+import { usePrice } from "../../hooks/usePrice";
 import "./Order.css";
 
 interface OrderFormData {
@@ -31,6 +33,8 @@ interface OrderFormData {
 const Order: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const { t } = useTranslation();
+    const formatPrice = usePrice();
     const [form] = Form.useForm();
     const usersData = useSelector(selectUserFromUserState);
     const perfumes = useSelector(selectCartItems);
@@ -67,58 +71,58 @@ const Order: FC = (): ReactElement => {
     return (
         <ContentWrapper>
             <div style={{ textAlign: "center" }}>
-                <ContentTitle icon={<ShoppingOutlined />} title={"Ordering"} />
+                <ContentTitle icon={<ShoppingOutlined />} title={t("order.title")} />
             </div>
             <Form onFinish={onFormSubmit} form={form}>
-                <Row gutter={32}>
-                    <Col span={12} className={"order-form-fields"}>
+                <Row gutter={[32, 24]}>
+                    <Col xs={24} md={12} className={"order-form-fields"}>
                         <FormInput
-                            title={"Name:"}
+                            title={t("order.name")}
                             titleSpan={5}
                             wrapperSpan={19}
                             name={"firstName"}
                             error={errors.firstNameError}
                             disabled={isOrderLoading}
-                            placeholder={"Enter the first name"}
+                            placeholder={t("order.namePlaceholder")}
                         />
                         <FormInput
-                            title={"Surname:"}
+                            title={t("order.surname")}
                             titleSpan={5}
                             wrapperSpan={19}
                             name={"lastName"}
                             error={errors.lastNameError}
                             disabled={isOrderLoading}
-                            placeholder={"Enter the last name"}
+                            placeholder={t("order.surnamePlaceholder")}
                         />
                         <FormInput
-                            title={"City:"}
+                            title={t("order.city")}
                             titleSpan={5}
                             wrapperSpan={19}
                             name={"city"}
                             error={errors.cityError}
                             disabled={isOrderLoading}
-                            placeholder={"Enter the city"}
+                            placeholder={t("order.cityPlaceholder")}
                         />
                         <FormInput
-                            title={"Address:"}
+                            title={t("order.address")}
                             titleSpan={5}
                             wrapperSpan={19}
                             name={"address"}
                             error={errors.addressError}
                             disabled={isOrderLoading}
-                            placeholder={"Enter the address"}
+                            placeholder={t("order.addressPlaceholder")}
                         />
                         <FormInput
-                            title={"Index:"}
+                            title={t("order.index")}
                             titleSpan={5}
                             wrapperSpan={19}
                             name={"postIndex"}
                             error={errors.postIndexError}
                             disabled={isOrderLoading}
-                            placeholder={"Enter the index"}
+                            placeholder={t("order.indexPlaceholder")}
                         />
                         <FormInput
-                            title={"Mobile:"}
+                            title={t("order.mobile")}
                             titleSpan={5}
                             wrapperSpan={19}
                             name={"phoneNumber"}
@@ -127,16 +131,16 @@ const Order: FC = (): ReactElement => {
                             placeholder={"(___)-___-____"}
                         />
                         <FormInput
-                            title={"Email:"}
+                            title={t("order.email")}
                             titleSpan={5}
                             wrapperSpan={19}
                             name={"email"}
                             error={errors.emailError}
                             disabled={isOrderLoading}
-                            placeholder={"example@gmail.com"}
+                            placeholder={t("order.emailPlaceholder")}
                         />
                     </Col>
-                    <Col span={12} className={"order-summary"}>
+                    <Col xs={24} md={12} className={"order-summary"}>
                         <Row gutter={[32, 32]}>
                             {perfumes.map((perfume) => (
                                 <OrderItem
@@ -148,7 +152,7 @@ const Order: FC = (): ReactElement => {
                         </Row>
                         <Row gutter={[32, 32]} className={"order-summary-total"} style={{ marginTop: 16 }}>
                             <Col span={12}>
-                                <Typography.Title level={3}>To pay : $ {totalPrice}.00</Typography.Title>
+                                <Typography.Title level={3}>{t("order.toPay", { price: formatPrice(totalPrice) })}</Typography.Title>
                             </Col>
                             <Col>
                                 <Button
@@ -158,7 +162,7 @@ const Order: FC = (): ReactElement => {
                                     size="large"
                                     icon={<CheckCircleOutlined />}
                                 >
-                                    Validate order
+                                    {t("common.validateOrder")}
                                 </Button>
                             </Col>
                         </Row>

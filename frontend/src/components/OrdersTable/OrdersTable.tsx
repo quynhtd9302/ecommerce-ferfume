@@ -1,6 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Table } from "antd";
 import { AsyncThunk } from "@reduxjs/toolkit";
 
@@ -8,6 +9,7 @@ import { HeaderResponse, OrderResponse } from "../../types/types";
 import { ACCOUNT_USER_ORDERS } from "../../constants/routeConstants";
 import { selectTotalElements } from "../../redux-toolkit/orders/orders-selector";
 import { useTablePagination } from "../../hooks/useTablePagination";
+import { usePrice } from "../../hooks/usePrice";
 
 type PropsType = {
     orders: Array<OrderResponse>;
@@ -16,6 +18,8 @@ type PropsType = {
 };
 
 const OrdersTable: FC<PropsType> = ({ orders, loading, fetchOrders }): ReactElement => {
+    const { t } = useTranslation();
+    const formatPrice = usePrice();
     const totalElements = useSelector(selectTotalElements);
     const handleTableChange = useTablePagination<OrderResponse, number>(fetchOrders);
 
@@ -24,6 +28,7 @@ const OrdersTable: FC<PropsType> = ({ orders, loading, fetchOrders }): ReactElem
             rowKey={"id"}
             onChange={handleTableChange}
             loading={loading}
+            scroll={{ x: true }}
             pagination={{
                 total: totalElements,
                 position: ["bottomRight", "topRight"]
@@ -31,38 +36,41 @@ const OrdersTable: FC<PropsType> = ({ orders, loading, fetchOrders }): ReactElem
             dataSource={orders}
             columns={[
                 {
-                    title: "Order №",
+                    title: t("account.orderNo"),
                     dataIndex: "id",
                     key: "id"
                 },
                 {
-                    title: "Date",
+                    title: t("account.date"),
                     dataIndex: "date",
                     key: "date",
                     sorter: (a, b) => a.date.localeCompare(b.date)
                 },
                 {
-                    title: "Customer",
+                    title: t("account.customer"),
                     dataIndex: "firstName",
                     key: "firstName",
                     render: (_, order: OrderResponse) => `${order.firstName} ${order.lastName}`
                 },
                 {
-                    title: "Email",
+                    title: t("account.email"),
                     dataIndex: "email",
                     key: "email"
                 },
                 {
-                    title: "Sum, $",
+                    title: t("account.sum"),
                     dataIndex: "totalPrice",
                     key: "totalPrice",
-                    sorter: (a, b) => a.totalPrice - b.totalPrice
+                    sorter: (a, b) => a.totalPrice - b.totalPrice,
+                    render: (totalPrice: number) => formatPrice(totalPrice)
                 },
                 {
-                    title: "Actions",
+                    title: t("common.actions"),
                     dataIndex: "operations",
                     key: "operations",
-                    render: (_, order: OrderResponse) => <Link to={`${ACCOUNT_USER_ORDERS}/${order.id}`}>Show more</Link>
+                    render: (_, order: OrderResponse) => (
+                        <Link to={`${ACCOUNT_USER_ORDERS}/${order.id}`}>{t("common.showMore")}</Link>
+                    )
                 }
             ]}
         />

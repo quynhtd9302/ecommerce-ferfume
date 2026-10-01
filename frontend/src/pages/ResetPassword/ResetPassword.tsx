@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { LockOutlined, ReloadOutlined, SyncOutlined } from "@ant-design/icons";
 import { useHistory, useParams } from "react-router-dom";
 import { Alert, Col, Divider, Form, Row } from "antd";
@@ -14,6 +15,7 @@ import IconButton from "../../components/IconButton/IconButton";
 
 const ResetPassword: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const params = useParams<{ code: string }>();
     const history = useHistory();
     const userEmail = useSelector(selectUserAuthEmail);
@@ -36,14 +38,14 @@ const ResetPassword: FC = (): ReactElement => {
 
     return (
         <ContentWrapper>
-            <ContentTitle icon={<SyncOutlined />} title={"RESET PASSWORD"} />
+            <ContentTitle icon={<SyncOutlined />} title={t("auth.resetPasswordTitle").toUpperCase()} />
             <Row gutter={32}>
                 <Col span={12}>
                     <Form onFinish={onClickReset}>
                         <Divider />
                         {errorMessage && <Alert type="error" message={errorMessage} />}
                         <FormInput
-                            title={"Password:"}
+                            title={t("auth.password")}
                             icon={<LockOutlined />}
                             titleSpan={8}
                             wrapperSpan={16}
@@ -53,7 +55,7 @@ const ResetPassword: FC = (): ReactElement => {
                             inputPassword
                         />
                         <FormInput
-                            title={"Confirm password:"}
+                            title={t("auth.confirmPassword")}
                             icon={<LockOutlined />}
                             titleSpan={8}
                             wrapperSpan={16}
@@ -62,7 +64,7 @@ const ResetPassword: FC = (): ReactElement => {
                             placeholder={"Confirm password"}
                             inputPassword
                         />
-                        <IconButton title={"Reset"} icon={<ReloadOutlined />} />
+                        <IconButton title={t("auth.reset")} icon={<ReloadOutlined />} />
                     </Form>
                 </Col>
             </Row>

@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { UnorderedListOutlined } from "@ant-design/icons";
 import { Col, notification, Pagination, Row } from "antd";
 
@@ -22,6 +23,7 @@ import "./PerfumeList.css";
 
 const PerfumeList: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const perfumes = useSelector(selectPerfumes);
     const isPerfumesLoading = useSelector(selectIsPerfumesLoading);
     const isPerfumeDeleted = useSelector(selectIsPerfumeDeleted);
@@ -43,8 +45,8 @@ const PerfumeList: FC = (): ReactElement => {
         if (isPerfumeDeleted) {
             window.scrollTo(0, 0);
             notification.success({
-                message: "Perfume deleted",
-                description: "Perfume successfully deleted!"
+                message: t("account.perfumeDeleted"),
+                description: t("account.perfumeDeletedDescription")
             });
         }
     }, [isPerfumeDeleted]);
@@ -75,7 +77,7 @@ const PerfumeList: FC = (): ReactElement => {
 
     return (
         <div>
-            <ContentTitle title={"List of perfumes"} titleLevel={4} icon={<UnorderedListOutlined />} />
+            <ContentTitle title={t("account.listOfPerfumes")} titleLevel={4} icon={<UnorderedListOutlined />} />
             <Row>
                 <Col span={24}>
                     <Row>

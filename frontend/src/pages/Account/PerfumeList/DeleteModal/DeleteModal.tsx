@@ -1,4 +1,5 @@
 import React, { FC, ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 import { Col, Modal, Row, Typography } from "antd";
 
 import { PerfumeResponse } from "../../../../types/types";
@@ -13,8 +14,10 @@ type PropsType = {
 };
 
 const DeleteModal: FC<PropsType> = ({ visible, deletePerfumeHandler, handleCancel, perfumeInfo }): ReactElement => {
+    const { t } = useTranslation();
+
     return (
-        <Modal title="Delete perfume" visible={visible} onOk={deletePerfumeHandler} onCancel={handleCancel}>
+        <Modal title={t("account.deletePerfume")} visible={visible} onOk={deletePerfumeHandler} onCancel={handleCancel}>
             <Row>
                 <Col span={12} className={"delete-modal-perfume-image-wrapper"}>
                     <img
@@ -24,7 +27,7 @@ const DeleteModal: FC<PropsType> = ({ visible, deletePerfumeHandler, handleCance
                     />
                 </Col>
                 <Col span={12}>
-                    <Typography.Text>Are you sure too delete?</Typography.Text>
+                    <Typography.Text>{t("account.deleteConfirm")}</Typography.Text>
                     <Typography.Title level={5}>{perfumeInfo?.perfumer}</Typography.Title>
                     <Typography.Title level={5}>{perfumeInfo?.perfumeTitle}</Typography.Title>
                 </Col>

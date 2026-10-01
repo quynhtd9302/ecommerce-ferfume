@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Card, Col, Row, Table } from "antd";
 import { InfoCircleOutlined, ShoppingOutlined } from "@ant-design/icons";
 
@@ -16,10 +17,13 @@ import ContentTitle from "../../../components/ContentTitle/ContentTitle";
 import Spinner from "../../../components/Spinner/Spinner";
 import AccountDataItem from "../../../components/AccountDataItem/AccountDataItem";
 import { OrderItemResponse } from "../../../types/types";
+import { usePrice } from "../../../hooks/usePrice";
 import "./ManageUserOrder.css";
 
 const ManageUserOrder: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
+    const formatPrice = usePrice();
     const params = useParams<{ id: string }>();
     const order = useSelector(selectOrder);
     const orderItems = useSelector(selectOrderItems);
@@ -48,7 +52,7 @@ const ManageUserOrder: FC = (): ReactElement => {
             ) : (
                 <>
                     <div style={{ textAlign: "center" }}>
-                        <ContentTitle title={`Order #${id}`} titleLevel={4} icon={<ShoppingOutlined />} />
+                        <ContentTitle title={t("account.orderHash", { id })} titleLevel={4} icon={<ShoppingOutlined />} />
                     </div>
                     <Row>
                         <Col span={24}>
@@ -56,21 +60,21 @@ const ManageUserOrder: FC = (): ReactElement => {
                                 <Row gutter={32}>
                                     <Col span={12}>
                                         <InfoCircleOutlined className={"manage-user-icon"} />
-                                        <ContentTitle title={"Customer information"} titleLevel={5} />
-                                        <AccountDataItem title={"First name"} text={firstName} />
-                                        <AccountDataItem title={"Last name"} text={lastName} />
-                                        <AccountDataItem title={"City"} text={city} />
-                                        <AccountDataItem title={"Address"} text={address} />
-                                        <AccountDataItem title={"Email"} text={email} />
-                                        <AccountDataItem title={"Phone number"} text={phoneNumber} />
-                                        <AccountDataItem title={"Post index"} text={postIndex} />
+                                        <ContentTitle title={t("account.customerInformation")} titleLevel={5} />
+                                        <AccountDataItem title={t("account.firstName")} text={firstName} />
+                                        <AccountDataItem title={t("account.lastName")} text={lastName} />
+                                        <AccountDataItem title={t("account.city")} text={city} />
+                                        <AccountDataItem title={t("account.address")} text={address} />
+                                        <AccountDataItem title={t("account.email")} text={email} />
+                                        <AccountDataItem title={t("account.phoneNumber")} text={phoneNumber} />
+                                        <AccountDataItem title={t("account.postIndex")} text={postIndex} />
                                     </Col>
                                     <Col span={12}>
                                         <InfoCircleOutlined className={"manage-user-icon"} />
-                                        <ContentTitle title={"Order information"} titleLevel={5} />
-                                        <AccountDataItem title={"Order id"} text={id} />
-                                        <AccountDataItem title={"Date"} text={date} />
-                                        <ContentTitle title={`Order summary: ${totalPrice}.0 $`} titleLevel={4} />
+                                        <ContentTitle title={t("account.orderInformation")} titleLevel={5} />
+                                        <AccountDataItem title={t("account.orderId")} text={id} />
+                                        <AccountDataItem title={t("account.date")} text={date} />
+                                        <ContentTitle title={t("account.orderSummaryPrice", { price: formatPrice(totalPrice ?? 0) })} titleLevel={4} />
                                     </Col>
                                 </Row>
                                 <Row style={{ marginTop: 16 }}>
@@ -81,38 +85,38 @@ const ManageUserOrder: FC = (): ReactElement => {
                                             dataSource={orderItems}
                                             columns={[
                                                 {
-                                                    title: "Perfume Id",
+                                                    title: t("account.perfumeId"),
                                                     dataIndex: "id",
                                                     key: "id"
                                                 },
                                                 {
-                                                    title: "Perfume Brand",
+                                                    title: t("account.perfumeBrand"),
                                                     dataIndex: "perfumer",
                                                     key: "perfumer",
                                                     render: (_, order: OrderItemResponse) => order.perfume.perfumer
                                                 },
                                                 {
-                                                    title: "Perfume Name",
+                                                    title: t("account.perfumeName"),
                                                     dataIndex: "perfumeTitle",
                                                     key: "perfumeTitle",
                                                     render: (_, order: OrderItemResponse) => order.perfume.perfumeTitle
                                                 },
                                                 {
-                                                    title: "Quantity",
+                                                    title: t("account.quantity"),
                                                     dataIndex: "quantity",
                                                     key: "quantity"
                                                 },
                                                 {
-                                                    title: "Price",
+                                                    title: t("account.price"),
                                                     dataIndex: "price",
                                                     key: "price",
-                                                    render: (_, order: OrderItemResponse) => `${order.perfume.price}.0 $`
+                                                    render: (_, order: OrderItemResponse) => formatPrice(order.perfume.price)
                                                 },
                                                 {
-                                                    title: "Amount",
+                                                    title: t("account.amount"),
                                                     dataIndex: "amount",
                                                     key: "amount",
-                                                    render: (_, order: OrderItemResponse) => `${order.amount}.0 $`
+                                                    render: (_, order: OrderItemResponse) => formatPrice(order.amount)
                                                 }
                                             ]}
                                         />

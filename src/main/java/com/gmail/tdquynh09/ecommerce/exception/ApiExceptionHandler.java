@@ -1,11 +1,14 @@
 package com.gmail.tdquynh09.ecommerce.exception;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Map;
 
+@Slf4j
 @ControllerAdvice
 public class ApiExceptionHandler {
 
@@ -38,5 +41,13 @@ public class ApiExceptionHandler {
     public ResponseEntity<Map<String, String>> handleInputFieldException(InputFieldException exception) {
         InputFieldException inputFieldException = new InputFieldException(exception.getBindingResult());
         return ResponseEntity.badRequest().body(inputFieldException.getErrorsMap());
+    }
+
+    // Catch-all: without this, an unexpected exception (NPE, DB error, ...) falls through to
+    // Spring's default Whitelabel error response and is never logged server-side.
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleUnexpectedException(Exception exception) {
+        log.error("Unhandled exception", exception);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong. Please try again later.");
     }
 }

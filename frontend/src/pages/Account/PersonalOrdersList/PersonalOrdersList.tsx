@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { ShoppingOutlined } from "@ant-design/icons";
 
 import { selectIsOrdersLoading, selectOrders } from "../../../redux-toolkit/orders/orders-selector";
@@ -11,6 +12,7 @@ import OrdersTable from "../../../components/OrdersTable/OrdersTable";
 
 const PersonalOrdersList: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const orders = useSelector(selectOrders);
     const isOrdersLoading = useSelector(selectIsOrdersLoading);
 
@@ -30,11 +32,11 @@ const PersonalOrdersList: FC = (): ReactElement => {
                 <>
                     {orders.length === 0 ? (
                         <div style={{ textAlign: "center" }}>
-                            <ContentTitle title={"You have no orders"} titleLevel={4} icon={<ShoppingOutlined />} />
+                            <ContentTitle title={t("account.noOrders")} titleLevel={4} icon={<ShoppingOutlined />} />
                         </div>
                     ) : (
                         <>
-                            <ContentTitle title={"List of all orders"} titleLevel={4} icon={<ShoppingOutlined />} />
+                            <ContentTitle title={t("account.listOfAllOrders")} titleLevel={4} icon={<ShoppingOutlined />} />
                             <OrdersTable loading={isOrdersLoading} orders={orders} fetchOrders={fetchUserOrders} />
                         </>
                     )}

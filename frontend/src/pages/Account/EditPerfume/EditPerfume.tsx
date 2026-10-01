@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { EditOutlined, UploadOutlined } from "@ant-design/icons";
 import { Button, Col, Form, notification, Row, Upload } from "antd";
@@ -38,6 +39,7 @@ type EditPerfumeData = {
 
 const EditPerfume: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const [form] = Form.useForm();
     const params = useParams<{ id: string }>();
     const perfumeData = useSelector(selectPerfume);
@@ -65,8 +67,8 @@ const EditPerfume: FC = (): ReactElement => {
         if (isPerfumeEdited) {
             window.scrollTo(0, 0);
             notification.success({
-                message: "Perfume edited",
-                description: "Perfume successfully edited!"
+                message: t("form.perfumeUpdated"),
+                description: t("form.perfumeUpdatedDescription")
             });
             dispatch(resetAdminState(LoadingStatus.SUCCESS));
         }
@@ -90,110 +92,110 @@ const EditPerfume: FC = (): ReactElement => {
 
     return (
         <div>
-            <ContentTitle title={"Edit perfume"} titleLevel={4} icon={<EditOutlined />} />
+            <ContentTitle title={t("account.editPerfume")} titleLevel={4} icon={<EditOutlined />} />
             <Form onFinish={onFormSubmit} form={form}>
-                <Row gutter={32}>
-                    <Col span={12}>
+                <Row gutter={[32, 16]}>
+                    <Col xs={24} md={12}>
                         <FormInput
-                            title={"Perfume title"}
+                            title={t("form.perfumeTitle")}
                             titleSpan={6}
                             wrapperSpan={18}
                             name={"perfumeTitle"}
                             error={errors.perfumeTitleError}
                             disabled={isLoading}
-                            placeholder={"Perfume title"}
+                            placeholder={t("form.perfumeTitle")}
                         />
                         <FormInput
-                            title={"Brand"}
+                            title={t("form.brand")}
                             titleSpan={6}
                             wrapperSpan={18}
                             name={"perfumer"}
                             error={errors.perfumerError}
                             disabled={isLoading}
-                            placeholder={"Brand"}
+                            placeholder={t("form.brand")}
                         />
                         <FormInput
-                            title={"Release year"}
+                            title={t("form.releaseYear")}
                             titleSpan={6}
                             wrapperSpan={18}
                             name={"year"}
                             error={errors.yearError}
                             disabled={isLoading}
-                            placeholder={"Release year"}
+                            placeholder={t("form.releaseYear")}
                         />
                         <FormInput
-                            title={"Country"}
+                            title={t("form.manufacturerCountry")}
                             titleSpan={6}
                             wrapperSpan={18}
                             name={"country"}
                             error={errors.countryError}
                             disabled={isLoading}
-                            placeholder={"Country"}
+                            placeholder={t("form.manufacturerCountry")}
                         />
                         <EditPerfumeSelect
-                            title={"Perfume type"}
+                            title={t("form.perfumeType")}
                             name={"type"}
-                            placeholder={"Perfume type"}
+                            placeholder={t("form.perfumeType")}
                             error={errors.typeError}
                             disabled={isLoading}
                             values={["Eau de Parfum", "Eau de Toilette"]}
                         />
                         <EditPerfumeSelect
-                            title={"Gender"}
+                            title={t("form.gender")}
                             name={"perfumeGender"}
-                            placeholder={"Gender"}
+                            placeholder={t("form.gender")}
                             disabled={isLoading}
                             values={["male", "female"]}
                         />
                         <FormInput
-                            title={"Volume"}
+                            title={t("form.volume")}
                             titleSpan={6}
                             wrapperSpan={18}
                             name={"volume"}
                             error={errors.volumeError}
                             disabled={isLoading}
-                            placeholder={"Volume"}
+                            placeholder={t("form.volume")}
                         />
                         <FormInput
-                            title={"Top notes"}
+                            title={t("form.topNotes")}
                             titleSpan={6}
                             wrapperSpan={18}
                             name={"fragranceTopNotes"}
                             error={errors.fragranceTopNotesError}
                             disabled={isLoading}
-                            placeholder={"Top notes"}
+                            placeholder={t("form.topNotes")}
                         />
                         <FormInput
-                            title={"Heart notes"}
+                            title={t("form.heartNotes")}
                             titleSpan={6}
                             wrapperSpan={18}
                             name={"fragranceMiddleNotes"}
                             error={errors.fragranceMiddleNotesError}
                             disabled={isLoading}
-                            placeholder={"Heart notes"}
+                            placeholder={t("form.heartNotes")}
                         />
                         <FormInput
-                            title={"Base notes"}
+                            title={t("form.baseNotes")}
                             titleSpan={6}
                             wrapperSpan={18}
                             name={"fragranceBaseNotes"}
                             error={errors.fragranceBaseNotesError}
                             disabled={isLoading}
-                            placeholder={"Base notes"}
+                            placeholder={t("form.baseNotes")}
                         />
                         <FormInput
-                            title={"Price"}
+                            title={t("form.price")}
                             titleSpan={6}
                             wrapperSpan={18}
                             name={"price"}
                             error={errors.priceError}
                             disabled={isLoading}
-                            placeholder={"Price"}
+                            placeholder={t("form.price")}
                         />
                     </Col>
-                    <Col span={12}>
+                    <Col xs={24} md={12}>
                         <Upload name={"file"} accept={"image/jpeg,image/png,image/gif,image/webp"} onChange={handleUpload} beforeUpload={() => false}>
-                            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                            <Button icon={<UploadOutlined />}>{t("form.clickToUpload")}</Button>
                         </Upload>
                         <div className={"edit-perfume-image-wrapper"}>
                             <img
@@ -204,7 +206,7 @@ const EditPerfume: FC = (): ReactElement => {
                         </div>
                     </Col>
                 </Row>
-                <IconButton title={"Edit"} icon={<EditOutlined />} disabled={isLoading} />
+                <IconButton title={t("common.edit")} icon={<EditOutlined />} disabled={isLoading} />
             </Form>
         </div>
     );

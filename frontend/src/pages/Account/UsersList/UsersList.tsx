@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { TeamOutlined } from "@ant-design/icons";
 import { Table } from "antd";
 
@@ -18,6 +19,7 @@ import { useTablePagination } from "../../../hooks/useTablePagination";
 
 const UsersList: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const users = useSelector(selectAdminStateUsers);
     const isLoading = useSelector(selectIsAdminStateLoading);
     const totalElements = useSelector(selectTotalElements);
@@ -33,11 +35,12 @@ const UsersList: FC = (): ReactElement => {
 
     return (
         <div>
-            <ContentTitle title={"List of all users"} titleLevel={4} icon={<TeamOutlined />} />
+            <ContentTitle title={t("account.listOfAllUsers")} titleLevel={4} icon={<TeamOutlined />} />
             <Table
                 rowKey={"id"}
                 onChange={handleTableChange}
                 loading={isLoading}
+                scroll={{ x: true }}
                 pagination={{
                     total: totalElements,
                     position: ["bottomRight", "topRight"]
@@ -45,12 +48,12 @@ const UsersList: FC = (): ReactElement => {
                 dataSource={users}
                 columns={[
                     {
-                        title: "Id",
+                        title: t("account.id"),
                         dataIndex: "id",
                         key: "id"
                     },
                     {
-                        title: "First name",
+                        title: t("account.firstName"),
                         dataIndex: "firstName",
                         key: "firstName"
                     },
@@ -60,22 +63,22 @@ const UsersList: FC = (): ReactElement => {
                         key: "email"
                     },
                     {
-                        title: "Role",
+                        title: t("account.role"),
                         dataIndex: "roles",
                         key: "roles",
                         render: (_, user: BaseUserResponse) => user.roles[0]
                     },
                     {
-                        title: "Provider",
+                        title: t("account.provider"),
                         dataIndex: "provider",
                         key: "provider"
                     },
                     {
-                        title: "Action",
+                        title: t("common.actions"),
                         dataIndex: "amount",
                         key: "amount",
                         render: (_, user: BaseUserResponse) => (
-                            <Link to={`${ACCOUNT_ADMIN_USERS}/${user.id}`}>Show more</Link>
+                            <Link to={`${ACCOUNT_ADMIN_USERS}/${user.id}`}>{t("common.showMore")}</Link>
                         )
                     }
                 ]}

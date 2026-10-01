@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { Button, Col, Form, Row } from "antd";
 import { CheckOutlined, EditOutlined, EyeInvisibleOutlined, ProfileOutlined } from "@ant-design/icons";
 
@@ -22,6 +23,7 @@ interface PersonalDataForm {
 
 const PersonalData: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const [form] = Form.useForm();
     const usersData = useSelector(selectUserFromUserState);
     const errors = useSelector(selectUserEditErrors);
@@ -48,72 +50,72 @@ const PersonalData: FC = (): ReactElement => {
 
     return (
         <>
-            <ContentTitle title={"My Account"} titleLevel={4} icon={<ProfileOutlined />} />
+            <ContentTitle title={t("account.myAccount")} titleLevel={4} icon={<ProfileOutlined />} />
             <Row>
                 <Col span={12}>
-                    <AccountDataItem title={"Email"} text={usersData?.email} />
-                    <AccountDataItem title={"First name"} text={usersData?.firstName} />
-                    <AccountDataItem title={"Last name"} text={usersData?.lastName} />
-                    <AccountDataItem title={"City"} text={usersData?.city} />
-                    <AccountDataItem title={"Address"} text={usersData?.address} />
-                    <AccountDataItem title={"Phone number"} text={usersData?.phoneNumber} />
-                    <AccountDataItem title={"Post index"} text={usersData?.postIndex} />
+                    <AccountDataItem title={t("account.email")} text={usersData?.email} />
+                    <AccountDataItem title={t("account.firstName")} text={usersData?.firstName} />
+                    <AccountDataItem title={t("account.lastName")} text={usersData?.lastName} />
+                    <AccountDataItem title={t("account.city")} text={usersData?.city} />
+                    <AccountDataItem title={t("account.address")} text={usersData?.address} />
+                    <AccountDataItem title={t("account.phoneNumber")} text={usersData?.phoneNumber} />
+                    <AccountDataItem title={t("account.postIndex")} text={usersData?.postIndex} />
                     <Button
                         type={"primary"}
                         onClick={onClickShowUserData}
                         icon={showUserData ? <EyeInvisibleOutlined /> : <EditOutlined />}
                     >
-                        {showUserData ? "Hide" : "Edit"}
+                        {showUserData ? t("account.hide") : t("common.edit")}
                     </Button>
                 </Col>
                 <Col span={12}>
                     {showUserData && (
                         <Form onFinish={onFormSubmit} form={form}>
                             <FormInput
-                                title={"First name:"}
+                                title={`${t("account.firstName")}:`}
                                 titleSpan={6}
                                 wrapperSpan={18}
                                 name={"firstName"}
                                 error={firstNameError}
-                                placeholder={"First name"}
+                                placeholder={t("account.firstName")}
                             />
                             <FormInput
-                                title={"Last name:"}
+                                title={`${t("account.lastName")}:`}
                                 titleSpan={6}
                                 wrapperSpan={18}
                                 name={"lastName"}
                                 error={lastNameError}
-                                placeholder={"Last name"}
+                                placeholder={t("account.lastName")}
                             />
                             <FormInput
-                                title={"City:"}
+                                title={`${t("account.city")}:`}
                                 titleSpan={6}
                                 wrapperSpan={18}
                                 name={"city"}
-                                placeholder={"City"}
+                                placeholder={t("account.city")}
                             />
                             <FormInput
-                                title={"Address:"}
+                                title={`${t("account.address")}:`}
                                 titleSpan={6}
                                 wrapperSpan={18}
                                 name={"address"}
-                                placeholder={"Address"}
+                                placeholder={t("account.address")}
                             />
                             <FormInput
-                                title={"Phone number:"}
+                                title={`${t("account.phoneNumber")}:`}
                                 titleSpan={6}
                                 wrapperSpan={18}
                                 name={"phoneNumber"}
-                                placeholder={"Phone number"}
+                                placeholder={t("account.phoneNumber")}
                             />
                             <FormInput
-                                title={"Post index:"}
+                                title={`${t("account.postIndex")}:`}
                                 titleSpan={6}
                                 wrapperSpan={18}
                                 name={"postIndex"}
-                                placeholder={"Post index"}
+                                placeholder={t("account.postIndex")}
                             />
-                            <IconButton title={"Save"} icon={<CheckOutlined />} />
+                            <IconButton title={t("common.save")} icon={<CheckOutlined />} />
                         </Form>
                     )}
                 </Col>

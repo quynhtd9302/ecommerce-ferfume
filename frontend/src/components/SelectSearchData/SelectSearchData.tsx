@@ -1,11 +1,12 @@
 import React, { FC, ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 import { Select } from "antd";
 import {SearchPerfume} from "../../types/types";
 
 const searchByData = [
-    { label: "Brand", value: SearchPerfume.BRAND },
-    { label: "Perfume title", value: SearchPerfume.PERFUME_TITLE },
-    { label: "Manufacturer country", value: SearchPerfume.COUNTRY }
+    { labelKey: "menu.searchByBrand", value: SearchPerfume.BRAND },
+    { labelKey: "menu.searchByTitle", value: SearchPerfume.PERFUME_TITLE },
+    { labelKey: "menu.searchByCountry", value: SearchPerfume.COUNTRY }
 ];
 
 type PropsType = {
@@ -13,11 +14,13 @@ type PropsType = {
 };
 
 const SelectSearchData: FC<PropsType> = ({ handleChangeSelect }): ReactElement => {
+    const { t } = useTranslation();
+
     return (
         <Select defaultValue={SearchPerfume.BRAND} onChange={handleChangeSelect} style={{ width: 250 }}>
             {searchByData.map((value, index) => (
                 <Select.Option key={index} value={value.value}>
-                    {value.label}
+                    {t(value.labelKey)}
                 </Select.Option>
             ))}
         </Select>

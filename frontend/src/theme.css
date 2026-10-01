@@ -9,12 +9,28 @@
     --ink-soft: #5C5346;
     --line: #E3D9C8;
     --accent: #8B5E3C;
+
+    /* Fixed tokens: always-dark bands (navbar/footer) and light text/buttons
+       laid over photos. These never flip with the light/dark toggle. */
+    --overlay-dark: #161310;
+    --overlay-light: #FAF7F1;
+}
+
+:root[data-theme="dark"] {
+    --bg: #15130F;
+    --surface: #1E1B16;
+    --surface-alt: #272219;
+    --ink: #F2EAD9;
+    --ink-soft: #B4A996;
+    --line: #38322A;
+    --accent: #C89B6C;
 }
 
 body {
     background: var(--bg);
     color: var(--ink);
     font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 h1, h2, h3, h4, h5,
@@ -22,7 +38,7 @@ h1, h2, h3, h4, h5,
 .ant-typography.ant-typography-title {
     font-family: "Fraunces", Georgia, serif !important;
     font-weight: 600 !important;
-    color: var(--ink);
+    color: var(--ink) !important;
 }
 
 a {
@@ -170,4 +186,138 @@ a:hover {
         margin: 24px 16px;
         padding: 28px 20px;
     }
+}
+
+/* ---------------------------------------------------------------------
+   Dark mode: antd renders some components (dropdown panels, modals,
+   notifications, the date picker) into a portal attached to <body>,
+   and ships its own white/black defaults for them that the variables
+   above don't reach. Override those explicitly when data-theme="dark"
+   is set on <html>. */
+
+[data-theme="dark"] .ant-btn-primary {
+    color: var(--overlay-dark);
+}
+
+[data-theme="dark"] .ant-btn:not(.ant-btn-primary):not(.ant-btn-dangerous) {
+    background: var(--surface);
+    border-color: var(--line);
+    color: var(--ink);
+}
+
+[data-theme="dark"] .ant-checkbox-checked .ant-checkbox-inner::after {
+    border-color: var(--overlay-dark);
+}
+
+[data-theme="dark"] .ant-radio-checked .ant-radio-inner::after {
+    background-color: var(--overlay-dark);
+}
+
+[data-theme="dark"] .ant-select-dropdown,
+[data-theme="dark"] .ant-dropdown-menu,
+[data-theme="dark"] .ant-picker-dropdown .ant-picker-panel-container,
+[data-theme="dark"] .ant-modal-content,
+[data-theme="dark"] .ant-modal-header,
+[data-theme="dark"] .ant-notification-notice,
+[data-theme="dark"] .ant-upload.ant-upload-select {
+    background: var(--surface);
+    color: var(--ink);
+    border-color: var(--line);
+}
+
+[data-theme="dark"] .ant-select-item,
+[data-theme="dark"] .ant-dropdown-menu-item,
+[data-theme="dark"] .ant-modal-title,
+[data-theme="dark"] .ant-notification-notice-message {
+    color: var(--ink);
+}
+
+[data-theme="dark"] .ant-select-item-option-active:not(.ant-select-item-option-disabled),
+[data-theme="dark"] .ant-select-item-option-selected:not(.ant-select-item-option-disabled),
+[data-theme="dark"] .ant-dropdown-menu-item:hover {
+    background: var(--surface-alt);
+}
+
+[data-theme="dark"] .ant-modal-close {
+    color: var(--ink-soft);
+}
+
+[data-theme="dark"] .ant-table,
+[data-theme="dark"] .ant-table-tbody > tr > td,
+[data-theme="dark"] .ant-pagination-item,
+[data-theme="dark"] .ant-pagination-prev .ant-pagination-item-link,
+[data-theme="dark"] .ant-pagination-next .ant-pagination-item-link {
+    background: var(--surface);
+}
+
+[data-theme="dark"] .ant-table-cell,
+[data-theme="dark"] .ant-table-tbody > tr > td {
+    color: var(--ink);
+}
+
+[data-theme="dark"] .ant-table-placeholder .ant-table-cell {
+    background: var(--surface);
+    color: var(--ink-soft);
+}
+
+[data-theme="dark"] .ant-empty-description {
+    color: var(--ink-soft);
+}
+
+[data-theme="dark"] .ant-pagination-item a,
+[data-theme="dark"] .ant-pagination-prev .ant-pagination-item-link,
+[data-theme="dark"] .ant-pagination-next .ant-pagination-item-link {
+    color: var(--ink);
+    border-color: var(--line);
+}
+
+[data-theme="dark"] .ant-typography:not(.ant-typography-success):not(.ant-typography-warning):not(.ant-typography-danger) {
+    color: var(--ink);
+}
+
+[data-theme="dark"] .ant-typography-secondary {
+    color: var(--ink-soft);
+}
+
+[data-theme="dark"] .ant-card-meta-title {
+    color: var(--ink);
+}
+
+[data-theme="dark"] .ant-card-meta-description {
+    color: var(--ink-soft);
+}
+
+[data-theme="dark"] .ant-checkbox-wrapper,
+[data-theme="dark"] .ant-radio-wrapper,
+[data-theme="dark"] .ant-form-item-label > label {
+    color: var(--ink);
+}
+
+[data-theme="dark"] .ant-pagination-item-ellipsis,
+[data-theme="dark"] .ant-pagination-item-link-icon {
+    color: var(--ink-soft) !important;
+}
+
+[data-theme="dark"] .ant-pagination-disabled .ant-pagination-item-link,
+[data-theme="dark"] .ant-pagination-disabled:hover .ant-pagination-item-link {
+    color: var(--line);
+}
+
+[data-theme="dark"] .ant-card,
+[data-theme="dark"] .ant-input,
+[data-theme="dark"] .ant-input-number,
+[data-theme="dark"] .ant-input-affix-wrapper,
+[data-theme="dark"] .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    background: var(--surface);
+    color: var(--ink);
+}
+
+[data-theme="dark"] .ant-input::placeholder,
+[data-theme="dark"] .ant-input-number-input::placeholder {
+    color: var(--ink-soft);
+}
+
+[data-theme="dark"] .ant-select-selection-placeholder,
+[data-theme="dark"] .ant-select-arrow {
+    color: var(--ink-soft);
 }

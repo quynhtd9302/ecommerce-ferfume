@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { Alert, Col, Divider, Form, Row, Space } from "antd";
 import { LockOutlined, LoginOutlined, MailOutlined } from "@ant-design/icons";
 
@@ -22,13 +23,14 @@ import "./Login.css";
 const Login: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const { t } = useTranslation();
     const params = useParams<{ code: string }>();
     const errorMessage = useSelector(selectErrorMessage);
     const successMessage = useSelector(selectSuccessMessage);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        
+
         if (params.code) {
             dispatch(activateAccount(params.code));
         }
@@ -44,7 +46,7 @@ const Login: FC = (): ReactElement => {
 
     return (
         <ContentWrapper>
-            <ContentTitle icon={<LoginOutlined />} title={"SIGN IN"} />
+            <ContentTitle icon={<LoginOutlined />} title={t("nav.signIn")} />
             <Row gutter={32}>
                 <Col span={12}>
                     <Form onFinish={onClickSignIn}>
@@ -52,7 +54,7 @@ const Login: FC = (): ReactElement => {
                         {errorMessage && <Alert type="error" message={errorMessage} />}
                         {successMessage && <Alert type="success" message={successMessage} />}
                         <FormInput
-                            title={"E-mail:"}
+                            title={t("auth.eMail")}
                             icon={<MailOutlined />}
                             titleSpan={6}
                             wrapperSpan={18}
@@ -60,7 +62,7 @@ const Login: FC = (): ReactElement => {
                             placeholder={"E-mail"}
                         />
                         <FormInput
-                            title={"Password:"}
+                            title={t("auth.password")}
                             icon={<LockOutlined />}
                             titleSpan={6}
                             wrapperSpan={18}
@@ -69,8 +71,8 @@ const Login: FC = (): ReactElement => {
                             inputPassword
                         />
                         <Space align={"baseline"} size={13}>
-                            <IconButton title={"Sign in"} icon={<LoginOutlined />} />
-                            <Link to={FORGOT}>Forgot password?</Link>
+                            <IconButton title={t("auth.signIn")} icon={<LoginOutlined />} />
+                            <Link to={FORGOT}>{t("auth.forgotPassword")}</Link>
                         </Space>
                     </Form>
                 </Col>

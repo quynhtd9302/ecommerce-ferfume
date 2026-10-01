@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { ShoppingCartOutlined, ShoppingOutlined } from "@ant-design/icons";
 import { Button, Col, Row, Typography } from "antd";
 import { Link } from "react-router-dom";
@@ -22,6 +23,7 @@ import "./Cart.css";
 
 const Cart: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const perfumes = useSelector(selectCartItems);
     const isCartLoading = useSelector(selectIsCartLoading);
     const [perfumeInCart, setPerfumeInCart] = useState(() => new Map());
@@ -74,18 +76,18 @@ const Cart: FC = (): ReactElement => {
             ) : (
                 <>
                     <div style={{ textAlign: "center" }}>
-                        <ContentTitle icon={<ShoppingCartOutlined />} title={"Cart"} />
+                        <ContentTitle icon={<ShoppingCartOutlined />} title={t("cart.title")} />
                     </div>
-                    <Row gutter={32}>
+                    <Row gutter={[32, 24]}>
                         {perfumes.length === 0 ? (
                             <Col span={24}>
                                 <Typography.Title level={3} style={{ textAlign: "center" }}>
-                                    Cart is empty
+                                    {t("cart.empty")}
                                 </Typography.Title>
                             </Col>
                         ) : (
                             <>
-                                <Col span={16}>
+                                <Col xs={24} md={16}>
                                     {perfumes.map((perfume) => (
                                         <CartItem
                                             key={perfume.id}
@@ -96,12 +98,12 @@ const Cart: FC = (): ReactElement => {
                                         />
                                     ))}
                                 </Col>
-                                <Col span={8}>
+                                <Col xs={24} md={8}>
                                     <div className={"cart-summary"}>
                                         <CartTotalPrice />
                                         <Link to={ORDER}>
                                             <Button type="primary" icon={<ShoppingOutlined />} size="large" block>
-                                                Checkout
+                                                {t("cart.checkout")}
                                             </Button>
                                         </Link>
                                     </div>

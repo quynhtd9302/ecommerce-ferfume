@@ -4,6 +4,7 @@ import { Card, Col, InputNumber, Row, Typography } from "antd";
 import { PerfumeResponse } from "../../../types/types";
 import RemoveButton from "./RemoveButton";
 import CartItemInfo from "./CartItemInfo";
+import { usePrice } from "../../../hooks/usePrice";
 
 type PropsType = {
     perfume: PerfumeResponse;
@@ -18,6 +19,7 @@ const CartItem: FC<PropsType> = ({
     onChangePerfumeItemCount,
     deleteFromCart
 }): ReactElement => {
+    const formatPrice = usePrice();
     const [perfumeCount, setPerfumeCount] = useState(1);
 
     useEffect(() => {
@@ -33,9 +35,9 @@ const CartItem: FC<PropsType> = ({
 
     return (
         <Card className={"cart-item"}>
-            <Row gutter={16}>
+            <Row gutter={[16, 16]}>
                 <CartItemInfo perfume={perfume} />
-                <Col span={8}>
+                <Col xs={24} sm={8}>
                     <Row gutter={8}>
                         <Col span={12}>
                             <InputNumber
@@ -50,7 +52,7 @@ const CartItem: FC<PropsType> = ({
                         </Col>
                     </Row>
                     <Row style={{ marginTop: 16 }}>
-                        <Typography.Title level={4}>${perfume.price * perfumeCount}</Typography.Title>
+                        <Typography.Title level={4}>{formatPrice(perfume.price * perfumeCount)}</Typography.Title>
                     </Row>
                 </Col>
             </Row>

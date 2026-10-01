@@ -5,6 +5,7 @@
 }
 
 .product-image-wrapper {
+    position: relative;
     display: flex;
     margin: 0 auto;
     justify-content: center;
@@ -14,10 +15,55 @@
     border: 1px solid var(--line, #e3d9c8);
     min-height: 440px;
     width: 100%;
+    box-sizing: border-box;
+    padding: 24px;
+    overflow: hidden;
+}
+
+.product-image-corner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    z-index: 1;
+}
+
+.product-image-corner-tl {
+    top: 14px;
+    left: 14px;
+    border-top: 1px solid var(--ink-soft, #5c5346);
+    border-left: 1px solid var(--ink-soft, #5c5346);
+}
+
+.product-image-corner-tr {
+    top: 14px;
+    right: 14px;
+    border-top: 1px solid var(--ink-soft, #5c5346);
+    border-right: 1px solid var(--ink-soft, #5c5346);
+}
+
+.product-image-corner-bl {
+    bottom: 14px;
+    left: 14px;
+    border-bottom: 1px solid var(--ink-soft, #5c5346);
+    border-left: 1px solid var(--ink-soft, #5c5346);
+}
+
+.product-image-corner-br {
+    bottom: 14px;
+    right: 14px;
+    border-bottom: 1px solid var(--ink-soft, #5c5346);
+    border-right: 1px solid var(--ink-soft, #5c5346);
 }
 
 .product-image {
     height: 380px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.product-details {
+    padding-left: 48px;
 }
 
 .product-eyebrow {
@@ -69,12 +115,71 @@
     white-space: nowrap;
 }
 
+.fragrance-pyramid {
+    background: var(--surface-alt, #f2ead9);
+    border: 1px solid var(--line, #e3d9c8);
+    border-top: none;
+    padding: 48px 40px;
+    text-align: center;
+}
+
+.fragrance-pyramid-title {
+    margin-bottom: 40px !important;
+}
+
+.fragrance-pyramid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.fragrance-pyramid-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--surface, #ffffff);
+    border: 1px solid var(--line, #e3d9c8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink, #161310);
+    margin-bottom: 6px;
+}
+
+.fragrance-pyramid-label {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft, #5c5346);
+}
+
+.fragrance-pyramid-value {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 16px;
+    color: var(--ink, #161310);
+}
+
 @media (max-width: 900px) {
     .product-info {
         padding: 20px;
     }
 
+    .product-details {
+        padding-left: 24px;
+    }
+
     .product-image {
         height: 260px;
+    }
+
+    .fragrance-pyramid {
+        padding: 36px 20px;
+    }
+}
+
+@media (max-width: 767px) {
+    .product-details {
+        padding-left: 0;
     }
 }

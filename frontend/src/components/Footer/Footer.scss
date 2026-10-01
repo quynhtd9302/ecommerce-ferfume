@@ -1,5 +1,5 @@
 .footer-wrapper {
-  background-color: var(--ink, #161310);
+  background-color: var(--overlay-dark, #161310);
   min-height: 220px;
 }
 
@@ -10,7 +10,7 @@
   padding: 48px 40px 28px;
 
   .ant-typography {
-    color: #e6ddce;
+    color: #e6ddce !important;
   }
 
   h3.ant-typography {

@@ -19,10 +19,15 @@
     justify-content: space-between;
 }
 
+.perfume-card .ant-typography {
+    color: var(--ink, #161310);
+}
+
 .perfume-card .ant-card-meta-title {
     font-family: "Fraunces", Georgia, serif;
     font-weight: 600;
     white-space: normal;
+    color: var(--ink, #161310);
 }
 
 .perfume-card .ant-card-meta-description {

@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { Alert, Col, Form, Row } from "antd";
 import { KeyOutlined, UndoOutlined } from "@ant-design/icons";
 
@@ -12,6 +13,7 @@ import { updateUserPassword } from "../../../redux-toolkit/user/user-thunks";
 
 const ChangePassword: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const [form] = Form.useForm();
     const errors = useSelector(selectUserResetPasswordErrors);
     const successMessage = useSelector(selectSuccessMessage);
@@ -33,7 +35,7 @@ const ChangePassword: FC = (): ReactElement => {
 
     return (
         <>
-            <ContentTitle title={"Change Password"} titleLevel={4} icon={<KeyOutlined />} />
+            <ContentTitle title={t("account.changePassword")} titleLevel={4} icon={<KeyOutlined />} />
             <Form onFinish={onFormSubmit} form={form}>
                 <Row>
                     <Col span={12}>
@@ -41,7 +43,7 @@ const ChangePassword: FC = (): ReactElement => {
                             <Alert type="success" message={successMessage} style={{ marginBottom: 16 }} />
                         )}
                         <FormInput
-                            title={"Enter a new password"}
+                            title={t("account.newPassword")}
                             titleSpan={10}
                             wrapperSpan={14}
                             name={"password"}
@@ -50,7 +52,7 @@ const ChangePassword: FC = (): ReactElement => {
                             inputPassword
                         />
                         <FormInput
-                            title={"Confirm password"}
+                            title={t("account.confirmPassword")}
                             titleSpan={10}
                             wrapperSpan={14}
                             name={"password2"}
@@ -58,7 +60,7 @@ const ChangePassword: FC = (): ReactElement => {
                             placeholder={"Password"}
                             inputPassword
                         />
-                        <IconButton title={"Change"} icon={<UndoOutlined />} />
+                        <IconButton title={t("common.change")} icon={<UndoOutlined />} />
                     </Col>
                 </Row>
             </Form>

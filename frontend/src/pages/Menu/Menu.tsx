@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { Col, Layout, Pagination, RadioChangeEvent, Row, Typography } from "antd";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { useLocation } from "react-router-dom";
@@ -27,6 +28,7 @@ export enum CheckboxCategoryFilter {
 
 const Menu: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const perfumes = useSelector(selectPerfumes);
     const isPerfumesLoading = useSelector(selectIsPerfumesLoading);
     const location = useLocation<{ id: string }>();
@@ -127,31 +129,31 @@ const Menu: FC = (): ReactElement => {
     return (
         <Layout>
             <Layout.Content className={"login-content"}>
-                <Typography.Title level={2}>Perfumes</Typography.Title>
-                <Row gutter={32}>
-                    <Col span={6} className={"menu-filters"}>
+                <Typography.Title level={2}>{t("menu.title")}</Typography.Title>
+                <Row gutter={[32, 24]}>
+                    <Col xs={24} md={6} className={"menu-filters"}>
                         <MenuCheckboxSection
-                            title={"Brand"}
+                            title={t("menu.brand")}
                             onChange={onChangeCheckbox}
                             data={perfumer}
                             category={CheckboxCategoryFilter.PERFUMERS}
                             selectedValues={filterParams.perfumers}
                         />
                         <MenuCheckboxSection
-                            title={"Gender"}
+                            title={t("menu.gender")}
                             onChange={onChangeCheckbox}
                             data={gender}
                             category={CheckboxCategoryFilter.GENDERS}
                             selectedValues={filterParams.genders}
                         />
-                        <MenuRadioSection title={"Price"} onChange={onChangeRadio} data={price} />
+                        <MenuRadioSection title={t("menu.price")} onChange={onChangeRadio} data={price} />
                     </Col>
-                    <Col span={18}>
-                        <Row>
-                            <Col span={9}>
+                    <Col xs={24} md={18}>
+                        <Row gutter={[16, 16]}>
+                            <Col xs={24} sm={9}>
                                 <SelectSearchData handleChangeSelect={handleChangeSelect} />
                             </Col>
-                            <Col span={10}>
+                            <Col xs={24} sm={10}>
                                 <InputSearch onSearch={onSearch} form={form} />
                             </Col>
                         </Row>

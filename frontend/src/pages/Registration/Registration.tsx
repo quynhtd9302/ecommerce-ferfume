@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
 import { Col, Divider, Form, Row } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import ReCAPTCHA from "react-google-recaptcha";
 import { LockOutlined, MailOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
 
@@ -15,6 +16,7 @@ import { LoadingStatus, UserRegistration } from "../../types/types";
 
 const Registration: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const isRegistered = useSelector(selectIsRegistered);
     const isLoading = useSelector(selectIsAuthLoading);
     const errors = useSelector(selectErrors);
@@ -45,13 +47,13 @@ const Registration: FC = (): ReactElement => {
 
     return (
         <ContentWrapper>
-            <ContentTitle icon={<UserAddOutlined />} title={"SIGN UP"} />
+            <ContentTitle icon={<UserAddOutlined />} title={t("nav.signUp")} />
             <Row gutter={32}>
                 <Col span={12}>
                     <Form onFinish={onClickSignIn}>
                         <Divider />
                         <FormInput
-                            title={"E-mail:"}
+                            title={t("auth.eMail")}
                             icon={<MailOutlined />}
                             titleSpan={8}
                             wrapperSpan={16}
@@ -60,7 +62,7 @@ const Registration: FC = (): ReactElement => {
                             placeholder={"E-mail"}
                         />
                         <FormInput
-                            title={"First name:"}
+                            title={t("auth.firstName")}
                             icon={<UserOutlined />}
                             titleSpan={8}
                             wrapperSpan={16}
@@ -69,7 +71,7 @@ const Registration: FC = (): ReactElement => {
                             placeholder={"First name"}
                         />
                         <FormInput
-                            title={"Last name:"}
+                            title={t("auth.lastName")}
                             icon={<UserOutlined />}
                             titleSpan={8}
                             wrapperSpan={16}
@@ -78,7 +80,7 @@ const Registration: FC = (): ReactElement => {
                             placeholder={"Last name"}
                         />
                         <FormInput
-                            title={"Password:"}
+                            title={t("auth.password")}
                             icon={<LockOutlined />}
                             titleSpan={8}
                             wrapperSpan={16}
@@ -88,7 +90,7 @@ const Registration: FC = (): ReactElement => {
                             inputPassword
                         />
                         <FormInput
-                            title={"Confirm password:"}
+                            title={t("auth.confirmPassword")}
                             icon={<LockOutlined />}
                             titleSpan={8}
                             wrapperSpan={16}
@@ -97,7 +99,7 @@ const Registration: FC = (): ReactElement => {
                             placeholder={"Confirm password"}
                             inputPassword
                         />
-                        <IconButton disabled={isLoading} title={"Sign up"} icon={<UserAddOutlined />} />
+                        <IconButton disabled={isLoading} title={t("auth.signUp")} icon={<UserAddOutlined />} />
                         <Form.Item
                             help={errors.captchaError}
                             validateStatus={errors.captchaError ? "error" : "validating"}

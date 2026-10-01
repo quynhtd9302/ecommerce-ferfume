@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { Carousel, Typography } from "antd";
 
 import { selectPerfumes } from "../../../redux-toolkit/perfumes/perfumes-selector";
@@ -12,6 +13,7 @@ export const perfumesIds = [26, 43, 46, 106, 34, 76, 82, 85, 27, 39, 79, 86];
 
 const PerfumeCardsSlider: FC = (): ReactElement => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const perfumes = useSelector(selectPerfumes);
 
     useEffect(() => {
@@ -27,7 +29,7 @@ const PerfumeCardsSlider: FC = (): ReactElement => {
     return (
         <div className={"perfume-cards-slider"}>
             <Typography.Title level={3} className={"perfume-cards-slider-title"}>
-                PERSONALLY RECOMMENDED
+                {t("home.recommended")}
             </Typography.Title>
             <Carousel>
                 <PerfumeCardsSliderItem perfumes={perfumes.slice(0, 4)} />

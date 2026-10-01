@@ -1,4 +1,5 @@
 import React, { FC, ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 import { Carousel, Typography } from "antd";
 
 import { brandsItem } from "./SliderBrandsData";
@@ -6,10 +7,12 @@ import SliderBrandsItem from "./SliderBrandsItem/SliderBrandsItem";
 import "./SliderBrands.css";
 
 const SliderBrands: FC = (): ReactElement => {
+    const { t } = useTranslation();
+
     return (
         <div className={"brands-wrapper"}>
             <Typography.Title level={3} className={"brands-wrapper-title"}>
-                BRANDS
+                {t("home.brands")}
             </Typography.Title>
             <Carousel className={"brands-carousel"} autoplay>
                 <SliderBrandsItem brands={brandsItem.slice(0, 6)} />

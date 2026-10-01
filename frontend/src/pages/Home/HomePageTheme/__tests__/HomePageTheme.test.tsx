@@ -12,8 +12,12 @@ describe("HomePageTheme", () => {
 
     it("should render correctly", () => {
         const wrapper = mountWithStore(<HomePageTheme />);
-        expect(wrapper.find("img").at(0).prop("src")).toBe("https://i.ibb.co/jMmJs60/Them-Woman-ENG.jpg");
-        expect(wrapper.find("img").at(1).prop("src")).toBe("https://i.ibb.co/mJGKz8c/Them-Man-ENG.jpg");
+        expect(wrapper.find("img").at(0).prop("src")).toBe(
+            "https://images.unsplash.com/photo-1595425959632-34f2822322ce?auto=format&fit=crop&w=1200&q=80"
+        );
+        expect(wrapper.find("img").at(1).prop("src")).toBe(
+            "https://images.unsplash.com/photo-1593487568720-92097fb460fb?auto=format&fit=crop&w=1200&q=80"
+        );
     });
 
     it("should click female Link", () => {
