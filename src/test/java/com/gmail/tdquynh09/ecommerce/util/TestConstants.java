@@ -1,5 +1,7 @@
 package com.gmail.tdquynh09.ecommerce.util;
 
+import com.gmail.tdquynh09.ecommerce.enums.PaymentMethod;
+
 public class TestConstants {
 
     public static final Integer USER_ID = 122;
@@ -28,6 +30,7 @@ public class TestConstants {
     public static final String ORDER_EMAIL = "test123@test.com";
     public static final String PHONE_NUMBER = "1234567890";
     public static final Integer POST_INDEX = 1234567890;
+    public static final PaymentMethod PAYMENT_METHOD = PaymentMethod.COD;
 
     public static final String PERFUMER_CREED = "Creed";
     public static final String PERFUMER_CHANEL = "Chanel";

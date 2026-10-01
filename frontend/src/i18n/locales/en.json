@@ -105,11 +105,27 @@
     "emailPlaceholder": "example@gmail.com",
     "toPay": "To pay : {{price}}",
     "price": "Price: {{price}}",
-    "quantity": "Quantity: {{count}}"
+    "quantity": "Quantity: {{count}}",
+    "paymentMethod": "Payment method",
+    "paymentMethodCod": "Cash on delivery (COD)",
+    "paymentMethodCodDescription": "Pay in cash when your order arrives",
+    "paymentMethodBankTransfer": "Bank transfer",
+    "paymentMethodBankTransferDescription": "Transfer to our bank account before shipping"
   },
   "orderFinalize": {
     "thankYou": "Thank you for the order!",
-    "orderNumber": "Your order number is: {{id}}"
+    "orderNumber": "Your order number is: {{id}}",
+    "paymentMethodLabel": "Payment method: {{method}}",
+    "codNote": "Please have the exact amount ready — our courier will collect payment on delivery.",
+    "bankTransferTitle": "Bank transfer details",
+    "bankTransferNote": "Please complete the transfer below so we can start processing your order.",
+    "scanToPay": "Scan with your banking app to pay",
+    "bankName": "Bank",
+    "accountNumber": "Account number",
+    "accountHolder": "Account holder",
+    "transferAmount": "Amount",
+    "transferContent": "Transfer content",
+    "transferContentValue": "DH{{id}}"
   },
   "account": {
     "myAccount": "My Account",
@@ -148,6 +164,8 @@
     "customerInformation": "Customer information",
     "orderInformation": "Order information",
     "orderId": "Order id",
+    "searchOrderPlaceholder": "Search by order id (e.g. DH21 or 21)",
+    "paymentMethod": "Payment method",
     "orderSummaryPrice": "Order summary: {{price}}",
     "perfumeId": "Perfume Id",
     "perfumeBrand": "Perfume Brand",

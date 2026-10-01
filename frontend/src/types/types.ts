@@ -73,6 +73,11 @@ export interface ReviewError {
     ratingError: string;
 }
 
+export enum PaymentMethod {
+    COD = "COD",
+    BANK_TRANSFER = "BANK_TRANSFER"
+}
+
 export interface OrderResponse {
     id: number;
     totalPrice: number;
@@ -84,6 +89,7 @@ export interface OrderResponse {
     email: string;
     phoneNumber: string;
     postIndex: number;
+    paymentMethod: PaymentMethod;
 }
 
 export interface OrderItemResponse {
@@ -101,6 +107,7 @@ export interface OrderError {
     addressError: string;
     postIndexError: string;
     phoneNumberError: string;
+    paymentMethodError: string;
 }
 
 export interface OrderRequest {
@@ -113,6 +120,7 @@ export interface OrderRequest {
     email?: string;
     phoneNumber?: string;
     postIndex?: string;
+    paymentMethod?: PaymentMethod;
 }
 
 export interface BaseUserResponse {

@@ -1,8 +1,8 @@
-import { useTranslation } from "react-i18next";
-
 import { formatPrice } from "../utils/currency";
 
+// Kept as a hook (rather than exporting formatPrice directly) so call sites
+// don't need to change if price formatting ever needs component-level state
+// again (e.g. a live exchange rate).
 export const usePrice = (): ((usdAmount: number) => string) => {
-    const { i18n } = useTranslation();
-    return (usdAmount: number) => formatPrice(usdAmount, i18n.language);
+    return formatPrice;
 };

@@ -12,11 +12,12 @@ import { selectUserFromUserState } from "../../redux-toolkit/user/user-selector"
 import {selectCartItems, selectTotalPrice} from "../../redux-toolkit/cart/cart-selector";
 import { selectIsOrderLoading, selectOrderErrors } from "../../redux-toolkit/order/order-selector";
 import { resetOrderState, setOrderLoadingState } from "../../redux-toolkit/order/order-slice";
-import { LoadingStatus } from "../../types/types";
+import { LoadingStatus, PaymentMethod } from "../../types/types";
 import { addOrder } from "../../redux-toolkit/order/order-thunks";
 import {resetCartState} from "../../redux-toolkit/cart/cart-slice";
 import {fetchCart} from "../../redux-toolkit/cart/cart-thunks";
 import OrderItem from "./OrderItem/OrderItem";
+import PaymentMethodSelector from "./PaymentMethodSelector/PaymentMethodSelector";
 import { usePrice } from "../../hooks/usePrice";
 import "./Order.css";
 
@@ -42,20 +43,38 @@ const Order: FC = (): ReactElement => {
     const errors = useSelector(selectOrderErrors);
     const isOrderLoading = useSelector(selectIsOrderLoading);
     const [perfumesFromLocalStorage, setPerfumesFromLocalStorage] = useState<Map<number, number>>(new Map());
+    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(PaymentMethod.COD);
+    // Local flag, independent of the shared cart.loadingState: that state can
+    // still read as LOADED from a previous page (e.g. the Cart page itself)
+    // on this page's very first render, before the fetchCart dispatched below
+    // has had a chance to flip it back to LOADING. Tracking readiness locally
+    // guarantees the submit button starts disabled on every mount and only
+    // enables once this page's own fetchCart call has actually resolved.
+    const [isCartReady, setIsCartReady] = useState<boolean>(false);
 
     useEffect(() => {
+        let isMounted = true;
         const perfumesFromLocalStorage: Map<number, number> = new Map(
             JSON.parse(localStorage.getItem("perfumes") as string)
         );
         setPerfumesFromLocalStorage(perfumesFromLocalStorage);
         dispatch(setOrderLoadingState(LoadingStatus.LOADED));
-        dispatch(fetchCart(Array.from(perfumesFromLocalStorage.keys())));
+        (async (): Promise<void> => {
+            try {
+                await dispatch(fetchCart(Array.from(perfumesFromLocalStorage.keys())));
+            } finally {
+                if (isMounted) {
+                    setIsCartReady(true);
+                }
+            }
+        })();
 
         if (usersData) {
             form.setFieldsValue(usersData);
         }
 
         return () => {
+            isMounted = false;
             dispatch(resetOrderState());
             dispatch(resetCartState());
         };
@@ -64,8 +83,16 @@ const Order: FC = (): ReactElement => {
     }, [dispatch, form]);
 
     const onFormSubmit = (order: OrderFormData): void => {
+        // Guard against submitting before the cart (and its totalPrice) has
+        // finished loading — the submit button is disabled for the same
+        // reason, but a Form can also be submitted by pressing Enter in a
+        // text field, which bypasses a disabled button.
+        if (!isCartReady) {
+            return;
+        }
+
         const perfumesId = Object.fromEntries(new Map(JSON.parse(localStorage.getItem("perfumes") as string)));
-        dispatch(addOrder({ order: { ...order, perfumesId, totalPrice }, history }));
+        dispatch(addOrder({ order: { ...order, perfumesId, totalPrice, paymentMethod }, history }));
     };
 
     return (
@@ -139,6 +166,7 @@ const Order: FC = (): ReactElement => {
                             disabled={isOrderLoading}
                             placeholder={t("order.emailPlaceholder")}
                         />
+                        <PaymentMethodSelector value={paymentMethod} onChange={setPaymentMethod} />
                     </Col>
                     <Col xs={24} md={12} className={"order-summary"}>
                         <Row gutter={[32, 32]}>
@@ -157,7 +185,8 @@ const Order: FC = (): ReactElement => {
                             <Col>
                                 <Button
                                     htmlType={"submit"}
-                                    loading={isOrderLoading}
+                                    loading={isOrderLoading || !isCartReady}
+                                    disabled={!isCartReady}
                                     type="primary"
                                     size="large"
                                     icon={<CheckCircleOutlined />}

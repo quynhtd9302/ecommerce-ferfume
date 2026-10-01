@@ -113,6 +113,7 @@ public class OrderControllerTest {
         orderRequest.setPhoneNumber(PHONE_NUMBER);
         orderRequest.setTotalPrice(TOTAL_PRICE);
         orderRequest.setPerfumesId(perfumesId);
+        orderRequest.setPaymentMethod(PAYMENT_METHOD);
 
         mockMvc.perform(post(API_V1_ORDER)
                         .content(mapper.writeValueAsString(orderRequest))
@@ -125,7 +126,8 @@ public class OrderControllerTest {
                 .andExpect(jsonPath("$.email").value(ORDER_EMAIL))
                 .andExpect(jsonPath("$.phoneNumber").value(PHONE_NUMBER))
                 .andExpect(jsonPath("$.postIndex").value(POST_INDEX))
-                .andExpect(jsonPath("$.totalPrice").value(TOTAL_PRICE));
+                .andExpect(jsonPath("$.totalPrice").value(TOTAL_PRICE))
+                .andExpect(jsonPath("$.paymentMethod").value("COD"));
     }
 
     @Test
@@ -142,7 +144,8 @@ public class OrderControllerTest {
                 .andExpect(jsonPath("$.addressError", is(FILL_IN_THE_INPUT_FIELD)))
                 .andExpect(jsonPath("$.emailError", is(EMAIL_CANNOT_BE_EMPTY)))
                 .andExpect(jsonPath("$.phoneNumberError", is(EMPTY_PHONE_NUMBER)))
-                .andExpect(jsonPath("$.postIndexError", is(EMPTY_POST_INDEX)));
+                .andExpect(jsonPath("$.postIndexError", is(EMPTY_POST_INDEX)))
+                .andExpect(jsonPath("$.paymentMethodError", is(EMPTY_PAYMENT_METHOD)));
     }
 
     @Test

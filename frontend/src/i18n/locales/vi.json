@@ -105,11 +105,27 @@
     "emailPlaceholder": "example@gmail.com",
     "toPay": "Cần thanh toán: {{price}}",
     "price": "Giá: {{price}}",
-    "quantity": "Số lượng: {{count}}"
+    "quantity": "Số lượng: {{count}}",
+    "paymentMethod": "Phương thức thanh toán",
+    "paymentMethodCod": "Thanh toán khi nhận hàng (COD)",
+    "paymentMethodCodDescription": "Thanh toán tiền mặt khi nhận được hàng",
+    "paymentMethodBankTransfer": "Chuyển khoản ngân hàng",
+    "paymentMethodBankTransferDescription": "Chuyển khoản trước khi đơn hàng được giao"
   },
   "orderFinalize": {
     "thankYou": "Cảm ơn bạn đã đặt hàng!",
-    "orderNumber": "Mã đơn hàng của bạn: {{id}}"
+    "orderNumber": "Mã đơn hàng của bạn: {{id}}",
+    "paymentMethodLabel": "Phương thức thanh toán: {{method}}",
+    "codNote": "Vui lòng chuẩn bị đúng số tiền — shipper sẽ thu tiền khi giao hàng.",
+    "bankTransferTitle": "Thông tin chuyển khoản",
+    "bankTransferNote": "Vui lòng chuyển khoản theo thông tin bên dưới để chúng tôi bắt đầu xử lý đơn hàng.",
+    "scanToPay": "Quét mã bằng app ngân hàng để thanh toán",
+    "bankName": "Ngân hàng",
+    "accountNumber": "Số tài khoản",
+    "accountHolder": "Chủ tài khoản",
+    "transferAmount": "Số tiền",
+    "transferContent": "Nội dung chuyển khoản",
+    "transferContentValue": "DH{{id}}"
   },
   "account": {
     "myAccount": "Tài khoản của tôi",
@@ -148,6 +164,8 @@
     "customerInformation": "Thông tin khách hàng",
     "orderInformation": "Thông tin đơn hàng",
     "orderId": "Mã đơn hàng",
+    "searchOrderPlaceholder": "Tìm theo mã đơn hàng (VD: DH21 hoặc 21)",
+    "paymentMethod": "Phương thức thanh toán",
     "orderSummaryPrice": "Tổng đơn hàng: {{price}}",
     "perfumeId": "Mã nước hoa",
     "perfumeBrand": "Thương hiệu",

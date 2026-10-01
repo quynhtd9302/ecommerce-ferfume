@@ -1,4 +1,4 @@
-import { OrderError, OrderItemResponse, OrderRequest, OrderResponse } from "../../../types/types";
+import { OrderError, OrderItemResponse, OrderRequest, OrderResponse, PaymentMethod } from "../../../types/types";
 
 export const mockOrderRequest: OrderRequest = {
     firstName: "John",
@@ -9,7 +9,8 @@ export const mockOrderRequest: OrderRequest = {
     phoneNumber: "1234567890",
     email: "test123@test.com",
     perfumesId: [33, 34],
-    totalPrice: 840
+    totalPrice: 840,
+    paymentMethod: PaymentMethod.COD
 };
 
 export const mockOrder: OrderResponse = {
@@ -22,7 +23,8 @@ export const mockOrder: OrderResponse = {
     address: "Wall Street1",
     email: "test123@test.com",
     phoneNumber: "1234567890",
-    postIndex: 1234567890
+    postIndex: 1234567890,
+    paymentMethod: PaymentMethod.COD
 };
 
 export const mockOrderItems: Array<OrderItemResponse> = [
@@ -69,7 +71,8 @@ export const mockOrders: Array<OrderResponse> = [
         address: "Wall Street1",
         email: "test123@test.com",
         phoneNumber: "1234567890",
-        postIndex: 1234567890
+        postIndex: 1234567890,
+        paymentMethod: PaymentMethod.COD
     },
     {
         id: 2,
@@ -81,7 +84,8 @@ export const mockOrders: Array<OrderResponse> = [
         address: "Wall Street1",
         email: "test123@test.com",
         phoneNumber: "1234567890",
-        postIndex: 1234567890
+        postIndex: 1234567890,
+        paymentMethod: PaymentMethod.BANK_TRANSFER
     },
     {
         id: 3,
@@ -93,7 +97,8 @@ export const mockOrders: Array<OrderResponse> = [
         address: "Tverskaya street 1",
         email: "ivan123@test.com",
         phoneNumber: "1234567890",
-        postIndex: 1234567890
+        postIndex: 1234567890,
+        paymentMethod: PaymentMethod.COD
     },
     {
         id: 4,
@@ -105,7 +110,8 @@ export const mockOrders: Array<OrderResponse> = [
         address: "Tverskaya street 1",
         email: "ivan123@test.com",
         phoneNumber: "1234567890",
-        postIndex: 1234567890
+        postIndex: 1234567890,
+        paymentMethod: PaymentMethod.COD
     },
     {
         id: 5,
@@ -117,7 +123,8 @@ export const mockOrders: Array<OrderResponse> = [
         address: "Tverskaya street 1",
         email: "ivan123@test.com",
         phoneNumber: "1234567890",
-        postIndex: 1234567890
+        postIndex: 1234567890,
+        paymentMethod: PaymentMethod.COD
     }
 ];
 
@@ -128,5 +135,6 @@ export const mockOrderErrors: OrderError = {
     cityError: "Fill in the input field",
     addressError: "Fill in the input field",
     postIndexError: "Post index cannot be empty",
-    phoneNumberError: "Phone number cannot be empty"
+    phoneNumberError: "Phone number cannot be empty",
+    paymentMethodError: "Payment method cannot be empty"
 };

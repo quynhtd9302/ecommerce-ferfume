@@ -1,5 +1,6 @@
 package com.gmail.tdquynh09.ecommerce.domain;
 
+import com.gmail.tdquynh09.ecommerce.enums.PaymentMethod;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -49,6 +50,10 @@ public class Order {
 
     @Column(name = "post_index")
     private Integer postIndex;
+
+    @Column(name = "payment_method")
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
 
     @OneToMany(fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;

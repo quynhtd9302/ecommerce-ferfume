@@ -2,6 +2,7 @@ import React from "react";
 
 import { mountWithStore } from "../../../../utils/test/testHelper";
 import { mockPerfumesResponse } from "../../../../utils/test/__mocks__/perfumes-mock";
+import { formatPrice } from "../../../../utils/currency";
 import OrderItem from "../OrderItem";
 
 describe("OrderItem", () => {
@@ -9,7 +10,7 @@ describe("OrderItem", () => {
         const wrapper = mountWithStore(<OrderItem perfume={mockPerfumesResponse[0]} quantity={11} />);
         expect(wrapper.text().includes(mockPerfumesResponse[0].perfumer)).toBe(true);
         expect(wrapper.text().includes(mockPerfumesResponse[0].perfumeTitle)).toBe(true);
-        expect(wrapper.text().includes(`Price: $${mockPerfumesResponse[0].price.toFixed(2)}`)).toBe(true);
+        expect(wrapper.text().includes(`Price: ${formatPrice(mockPerfumesResponse[0].price)}`)).toBe(true);
         expect(wrapper.text().includes("Quantity: 11")).toBe(true);
     });
 });

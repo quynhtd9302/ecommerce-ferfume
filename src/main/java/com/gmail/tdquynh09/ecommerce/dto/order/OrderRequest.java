@@ -1,5 +1,6 @@
 package com.gmail.tdquynh09.ecommerce.dto.order;
 
+import com.gmail.tdquynh09.ecommerce.enums.PaymentMethod;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -38,4 +39,7 @@ public class OrderRequest {
     @NotNull(message = EMPTY_POST_INDEX)
     @Min(value = 5, message = "Post index must contain 5 digits")
     private Integer postIndex;
+
+    @NotNull(message = EMPTY_PAYMENT_METHOD)
+    private PaymentMethod paymentMethod;
 }

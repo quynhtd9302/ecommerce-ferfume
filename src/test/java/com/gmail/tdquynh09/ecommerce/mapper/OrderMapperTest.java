@@ -31,6 +31,7 @@ public class OrderMapperTest {
         orderRequest.setPostIndex(POST_INDEX);
         orderRequest.setPhoneNumber(PHONE_NUMBER);
         orderRequest.setTotalPrice(TOTAL_PRICE);
+        orderRequest.setPaymentMethod(PAYMENT_METHOD);
 
         Order order = modelMapper.map(orderRequest, Order.class);
         assertEquals(orderRequest.getFirstName(), order.getFirstName());
@@ -41,6 +42,7 @@ public class OrderMapperTest {
         assertEquals(orderRequest.getPostIndex(), order.getPostIndex());
         assertEquals(orderRequest.getPhoneNumber(), order.getPhoneNumber());
         assertEquals(orderRequest.getTotalPrice(), order.getTotalPrice());
+        assertEquals(orderRequest.getPaymentMethod(), order.getPaymentMethod());
     }
 
     @Test
@@ -55,6 +57,7 @@ public class OrderMapperTest {
         order.setPostIndex(POST_INDEX);
         order.setPhoneNumber(PHONE_NUMBER);
         order.setTotalPrice(TOTAL_PRICE);
+        order.setPaymentMethod(PAYMENT_METHOD);
 
         OrderResponse orderResponse = modelMapper.map(order, OrderResponse.class);
         assertEquals(order.getId(), orderResponse.getId());
@@ -66,5 +69,6 @@ public class OrderMapperTest {
         assertEquals(order.getPostIndex(), orderResponse.getPostIndex());
         assertEquals(order.getPhoneNumber(), orderResponse.getPhoneNumber());
         assertEquals(order.getTotalPrice(), orderResponse.getTotalPrice());
+        assertEquals(order.getPaymentMethod(), orderResponse.getPaymentMethod());
     }
 }

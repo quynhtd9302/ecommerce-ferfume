@@ -16,7 +16,7 @@ import { resetOrderState } from "../../../redux-toolkit/order/order-slice";
 import ContentTitle from "../../../components/ContentTitle/ContentTitle";
 import Spinner from "../../../components/Spinner/Spinner";
 import AccountDataItem from "../../../components/AccountDataItem/AccountDataItem";
-import { OrderItemResponse } from "../../../types/types";
+import { OrderItemResponse, PaymentMethod } from "../../../types/types";
 import { usePrice } from "../../../hooks/usePrice";
 import "./ManageUserOrder.css";
 
@@ -29,7 +29,9 @@ const ManageUserOrder: FC = (): ReactElement => {
     const orderItems = useSelector(selectOrderItems);
     const isOrderLoading = useSelector(selectIsOrderLoading);
     const isOrderLoaded = useSelector(selectIsOrderLoaded);
-    const { id, email, firstName, lastName, totalPrice, postIndex, phoneNumber, date, city, address } = order;
+    const { id, email, firstName, lastName, totalPrice, postIndex, phoneNumber, date, city, address, paymentMethod } = order;
+    const paymentMethodLabel =
+        paymentMethod === PaymentMethod.BANK_TRANSFER ? t("order.paymentMethodBankTransfer") : t("order.paymentMethodCod");
 
     useEffect(() => {
         dispatch(fetchOrderById(params.id));
@@ -74,6 +76,7 @@ const ManageUserOrder: FC = (): ReactElement => {
                                         <ContentTitle title={t("account.orderInformation")} titleLevel={5} />
                                         <AccountDataItem title={t("account.orderId")} text={id} />
                                         <AccountDataItem title={t("account.date")} text={date} />
+                                        <AccountDataItem title={t("account.paymentMethod")} text={paymentMethodLabel} />
                                         <ContentTitle title={t("account.orderSummaryPrice", { price: formatPrice(totalPrice ?? 0) })} titleLevel={4} />
                                     </Col>
                                 </Row>

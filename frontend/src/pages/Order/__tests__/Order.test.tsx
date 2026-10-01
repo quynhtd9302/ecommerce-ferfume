@@ -19,11 +19,12 @@ describe("Order", () => {
         mockDispatchFn = mockDispatch();
     });
 
-    it("should render correctly", () => {
+    it("should render correctly", async () => {
         localStorage.setItem("perfumes", "[[17,1],[27,1]]");
         const wrapper = mountWithStore(<Order />, mockStore);
+        await waitForComponentToRender(wrapper);
         expect(wrapper.find(OrderItem).length).toEqual(2);
-        expect(wrapper.text().includes("To pay : $777.00")).toBe(true);
+        expect(wrapper.text().includes("To pay : 19.425.000 ₫")).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, { payload: LoadingStatus.LOADED, type: "order/setOrderLoadingState" });
         expect(mockDispatchFn).nthCalledWith(2, expect.any(Function));
     });

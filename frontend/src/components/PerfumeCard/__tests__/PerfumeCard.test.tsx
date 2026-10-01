@@ -3,6 +3,7 @@ import { Button } from "antd";
 
 import { mountWithStore } from "../../../utils/test/testHelper";
 import { mockPerfumesResponse } from "../../../utils/test/__mocks__/perfumes-mock";
+import { formatPrice } from "../../../utils/currency";
 import PerfumeCard from "../PerfumeCard";
 
 describe("PerfumeCard", () => {
@@ -15,7 +16,7 @@ describe("PerfumeCard", () => {
         expect(wrapper.find(Button).at(0).text().includes("Edit")).toBe(true);
         expect(wrapper.find(Button).at(1).text().includes("Delete")).toBe(true);
         expect(wrapper.text().includes(`${mockPerfume.reviewsCount} reviews`)).toBe(true);
-        expect(wrapper.text().includes(`$${mockPerfume.price}.00`)).toBe(true);
+        expect(wrapper.text().includes(formatPrice(mockPerfume.price))).toBe(true);
     });
 
     it("should render add to cart button", () => {
@@ -24,7 +25,7 @@ describe("PerfumeCard", () => {
         );
         expect(wrapper.find(Button).at(0).text().includes("Add to cart")).toBe(true);
         expect(wrapper.text().includes(`${mockPerfume.reviewsCount} reviews`)).toBe(true);
-        expect(wrapper.text().includes(`$${mockPerfume.price}.00`)).toBe(true);
+        expect(wrapper.text().includes(formatPrice(mockPerfume.price))).toBe(true);
     });
 
     it("should click onClickAddToCart", () => {

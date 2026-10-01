@@ -1,5 +1,6 @@
 package com.gmail.tdquynh09.ecommerce.dto.order;
 
+import com.gmail.tdquynh09.ecommerce.enums.PaymentMethod;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,4 +19,5 @@ public class OrderResponse {
     private String email;
     private String phoneNumber;
     private Integer postIndex;
+    private PaymentMethod paymentMethod;
 }

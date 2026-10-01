@@ -3,6 +3,7 @@ import { InputNumber } from "antd";
 
 import { mountWithStore } from "../../../../utils/test/testHelper";
 import { mockCartPerfumesResponse } from "../../../../utils/test/__mocks__/perfumes-mock";
+import { formatPrice } from "../../../../utils/currency";
 import CartItem from "../CartItem";
 
 describe("CartItem", () => {
@@ -19,7 +20,7 @@ describe("CartItem", () => {
             />
         );
         expect(wrapper.find(InputNumber).at(0).prop("value")).toBe(mockPerfumeCount);
-        expect(wrapper.text().includes(`$${mockPerfume.price * mockPerfumeCount}`)).toBe(true);
+        expect(wrapper.text().includes(formatPrice(mockPerfume.price * mockPerfumeCount))).toBe(true);
     });
 
     it("should handle Perfumes Count", () => {

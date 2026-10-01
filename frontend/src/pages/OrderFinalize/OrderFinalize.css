@@ -1,0 +1,44 @@
+.bank-transfer-info {
+    max-width: 480px;
+    margin: 32px auto 0;
+    text-align: center;
+}
+
+.bank-transfer-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.bank-transfer-qr img {
+    /* Fixed white frame regardless of theme: the QR code itself needs high
+       contrast against its background to stay scannable. */
+    width: 220px;
+    height: 220px;
+    padding: 12px;
+    background: #ffffff;
+    border: 1px solid var(--line, #e3d9c8);
+}
+
+.bank-transfer-details {
+    margin-top: 16px;
+    border: 1px solid var(--line, #e3d9c8);
+    background: var(--surface-alt, #f2ead9);
+    padding: 20px 24px;
+    text-align: left;
+}
+
+.bank-transfer-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line, #e3d9c8);
+    color: var(--ink, #161310);
+}
+
+.bank-transfer-row:last-child {
+    border-bottom: none;
+}
